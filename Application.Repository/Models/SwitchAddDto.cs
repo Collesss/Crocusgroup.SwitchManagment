@@ -1,8 +1,6 @@
-﻿using MediatR;
-
-namespace Application.UseCases.Switches.Commands.Add
+﻿namespace Application.Repository.Models
 {
-    public class AddSwitchCommand : IRequest<int>
+    public class SwitchAddDto
     {
         public string IpOrName { get; set; }
 

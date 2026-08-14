@@ -10,7 +10,7 @@ namespace Infrastructure.Persistence.SQLite.MapsterConfiguration
         {
             config.NewConfig<SwitchDbEntity, SwitchDto>()
                 .RequireDestinationMemberSource(true);
-            config.NewConfig<SwitchDto, SwitchDbEntity>()
+            config.NewConfig<SwitchAddDto, SwitchDbEntity>()
                 .RequireDestinationMemberSource(true);
         }
     }

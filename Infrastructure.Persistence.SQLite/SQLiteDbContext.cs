@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Persistence.SQLite.Models;
+using Infrastructure.Persistence.SQLite.ModelsConfigurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.SQLite
@@ -23,8 +24,7 @@ namespace Infrastructure.Persistence.SQLite
         {
             base.OnModelCreating(modelBuilder);
 
-
-
+            modelBuilder.ApplyConfiguration(new SwitchDbEntityConfiguration());
         }
     }
 }

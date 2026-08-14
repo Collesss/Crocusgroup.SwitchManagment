@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Application.UseCases.Switches.Commands.Delete
 {
-    public class DeleteSwitchCommand
+    public class DeleteSwitchCommand : IRequest
     {
         public int Id { get; set; }
     }
