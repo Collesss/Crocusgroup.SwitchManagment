@@ -4,6 +4,7 @@ using Application.Repository.Interfaces;
 using Application.Repository.Models;
 using Infrastructure.Persistence.SQLite.Models;
 using MapsterMapper;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.SQLite.Implementations
@@ -31,9 +32,9 @@ namespace Infrastructure.Persistence.SQLite.Implementations
 
                 return addEntryEntity.Entity.Id;
             }
-            catch(DbUpdateException e)
+            catch(DbUpdateException e) when (e.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19)
             {
-                throw new RepositoryException(ErrorCode.Unknow, e);
+                throw new RepositoryException(RepositoryErrorCode.SwitchAddIpAlreadyExist, e);
             }
         }
 
@@ -47,11 +48,11 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
             catch(DbUpdateConcurrencyException e)
             {
-                throw new RepositoryException(ErrorCode.SwitchDeleteNotFound, e);
+                throw new RepositoryException(RepositoryErrorCode.SwitchDeleteNotFound, e);
             }
         }
 
         public async Task<SwitchDto> GetById(int id, CancellationToken cancellationToken = default) =>
-            _mapper.Map<SwitchDbEntity, SwitchDto>(await _dbContext.Switches.FindAsync([id], cancellationToken) ?? throw new RepositoryException(ErrorCode.SwitchGetByIdNotFound));
+            _mapper.Map<SwitchDbEntity, SwitchDto>(await _dbContext.Switches.FindAsync([id], cancellationToken) ?? throw new RepositoryException(RepositoryErrorCode.SwitchGetByIdNotFound));
     }
 }

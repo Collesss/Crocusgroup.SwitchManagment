@@ -8,7 +8,7 @@ namespace Application.Common.MapsterConfigurations
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<AddSwitchCommand, SwitchAddDto>();
+            config.NewConfig<AdminAddSwitchCommand, SwitchAddDto>();
         }
     }
 }

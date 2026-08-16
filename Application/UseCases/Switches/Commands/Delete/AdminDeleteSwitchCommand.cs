@@ -2,7 +2,7 @@
 
 namespace Application.UseCases.Switches.Commands.Delete
 {
-    public class DeleteSwitchCommand : IRequest
+    public class AdminDeleteSwitchCommand : IRequest
     {
         public int Id { get; set; }
     }

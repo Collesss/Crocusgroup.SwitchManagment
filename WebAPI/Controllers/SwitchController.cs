@@ -1,5 +1,9 @@
-﻿using MapsterMapper;
+﻿using Application.Common.Exceptions;
+using Application.UseCases.Switches.Commands.Add;
+using Application.UseCases.Switches.Queries.GetSwitchDetail;
+using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models.Dto.Response;
 
@@ -11,6 +15,7 @@ namespace WebAPI.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+
 
         public SwitchController(IMediator mediator, IMapper mapper)
         {
@@ -25,19 +30,25 @@ namespace WebAPI.Controllers
         }
         */
 
-        [HttpGet("{id}")]
-        public Task<ActionResult<SwitchResponseDto>> Get(int id)
+        [HttpGet("{id}/admin")]
+        public async Task<ActionResult<AdminGetSwitchDetailVm>> Get(int id)
         {
-            
-
-            return null;
+            try
+            {
+                return Ok(await _mediator.Send(new AdminGetSwitchDetailQuery { Id = id }));
+            }
+            catch(ApplicationLayerException e) when (e.ErrorCode == Application.Common.Exceptions.Enums.ApplicationErrorCode.AdminGetSwitchDetailNotFound)
+            {
+                return Problem(detail: "Switch with this 'id' not exist.", statusCode: StatusCodes.Status404NotFound);
+            }
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        public async Task<ActionResult<int>> Post([FromBody] AdminAddSwitchCommand addSwitch) =>
+            Ok(await _mediator.Send(addSwitch));
 
+
+        /*
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
@@ -47,5 +58,6 @@ namespace WebAPI.Controllers
         public void Delete(int id)
         {
         }
+        */
     }
 }

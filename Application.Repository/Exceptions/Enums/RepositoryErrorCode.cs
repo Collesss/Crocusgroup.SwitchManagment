@@ -1,6 +1,6 @@
 ﻿namespace Application.Repository.Exceptions.Enums
 {
-    public enum ErrorCode
+    public enum RepositoryErrorCode
     {
         Unknow,
         SwitchAddIpAlreadyExist,
