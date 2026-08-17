@@ -52,6 +52,9 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
         }
 
+        public async Task<IEnumerable<SwitchDto>> GetAll(CancellationToken cancellationToken = default) =>
+            _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchDto>>(await _dbContext.Switches.ToListAsync(cancellationToken)));
+
         public async Task<SwitchDto> GetById(int id, CancellationToken cancellationToken = default) =>
             _mapper.Map<SwitchDbEntity, SwitchDto>(await _dbContext.Switches.FindAsync([id], cancellationToken) ?? throw new RepositoryException(RepositoryErrorCode.SwitchGetByIdNotFound));
     }

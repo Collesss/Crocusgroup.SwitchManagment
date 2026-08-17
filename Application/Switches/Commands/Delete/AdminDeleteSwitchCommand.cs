@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.UseCases.Switches.Commands.Delete
+namespace Application.Switches.Commands.Delete
 {
     public class AdminDeleteSwitchCommand : IRequest
     {

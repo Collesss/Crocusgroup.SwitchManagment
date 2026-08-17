@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.UseCases.Switches.Commands.Add
+namespace Application.Switches.Commands.Add
 {
     public class AdminAddSwitchCommand : IRequest<int>
     {

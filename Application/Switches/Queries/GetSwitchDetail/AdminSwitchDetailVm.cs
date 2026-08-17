@@ -1,6 +1,6 @@
-﻿namespace Application.UseCases.Switches.Queries.GetSwitchDetail
+﻿namespace Application.Switches.Queries.GetSwitchDetail
 {
-    public class AdminGetSwitchDetailVm
+    public class AdminSwitchDetailVm
     {
         public int Id { get; set; }
 

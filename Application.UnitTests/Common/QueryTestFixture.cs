@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Persistence.SQLite;
 using MapsterMapper;
 
-namespace Application.UnitTests.UseCases.Common
+namespace Application.UnitTests.Common
 {
     public class QueryTestFixture : IDisposable
     {

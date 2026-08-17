@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence.SQLite
     {
         public DbSet<SwitchDbEntity> Switches { get; set; }
 
-        public SQLiteDbContext(DbContextOptions options) : base(options)
+        public SQLiteDbContext(DbContextOptions<SQLiteDbContext> options) : base(options)
         {
             Database.EnsureCreated();
         }

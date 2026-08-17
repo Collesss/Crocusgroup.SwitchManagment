@@ -7,7 +7,7 @@ using Application.Repository.Models;
 using MapsterMapper;
 using MediatR;
 
-namespace Application.UseCases.Switches.Commands.Add
+namespace Application.Switches.Commands.Add
 {
     public class AdminAddSwitchCommandHandler : IRequestHandler<AdminAddSwitchCommand, int>
     {
@@ -26,7 +26,7 @@ namespace Application.UseCases.Switches.Commands.Add
             {
                 return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, SwitchAddDto>(request), cancellationToken);
             }
-            catch(RepositoryException e) when (e.ErrorCode == RepositoryErrorCode.SwitchAddIpAlreadyExist)
+            catch(RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchAddIpAlreadyExist)
             {
                 throw new ApplicationLayerException(ApplicationErrorCode.AdminAddSwitchAlreadyExist);
             }

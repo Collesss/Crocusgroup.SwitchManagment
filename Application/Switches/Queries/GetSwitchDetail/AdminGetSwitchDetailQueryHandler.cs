@@ -6,26 +6,26 @@ using Application.Repository.Models;
 using MapsterMapper;
 using MediatR;
 
-namespace Application.UseCases.Switches.Queries.GetSwitchDetail
+namespace Application.Switches.Queries.GetSwitchDetail
 {
-    public class AdminGetSwitchDetailHandler : IRequestHandler<AdminGetSwitchDetailQuery, AdminGetSwitchDetailVm>
+    public class AdminGetSwitchDetailQueryHandler : IRequestHandler<AdminGetSwitchDetailQuery, AdminSwitchDetailVm>
     {
         private readonly ISwitchRepository _switchRepository;
         private readonly IMapper _mapper;
 
-        public AdminGetSwitchDetailHandler(ISwitchRepository switchRepository, IMapper mapper)
+        public AdminGetSwitchDetailQueryHandler(ISwitchRepository switchRepository, IMapper mapper)
         {
             _switchRepository = switchRepository ?? throw new ArgumentNullException(nameof(switchRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<AdminGetSwitchDetailVm> Handle(AdminGetSwitchDetailQuery request, CancellationToken cancellationToken)
+        public async Task<AdminSwitchDetailVm> Handle(AdminGetSwitchDetailQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                return _mapper.Map<SwitchDto, AdminGetSwitchDetailVm>(await _switchRepository.GetById(request.Id, cancellationToken));
+                return _mapper.Map<SwitchDto, AdminSwitchDetailVm>(await _switchRepository.GetById(request.Id, cancellationToken));
             }
-            catch(RepositoryException e) when (e.ErrorCode == RepositoryErrorCode.SwitchGetByIdNotFound)
+            catch(RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchGetByIdNotFound)
             {
                 throw new ApplicationLayerException(Common.Exceptions.Enums.ApplicationErrorCode.AdminGetSwitchDetailNotFound);
             }

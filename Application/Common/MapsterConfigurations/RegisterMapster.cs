@@ -1,5 +1,5 @@
 ﻿using Application.Repository.Models;
-using Application.UseCases.Switches.Commands.Add;
+using Application.Switches.Commands.Add;
 using Mapster;
 
 namespace Application.Common.MapsterConfigurations

@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
-using Application.UseCases.Switches.Commands.Add;
-using Application.UseCases.Switches.Queries.GetSwitchDetail;
+using Application.Switches.Commands.Add;
+using Application.Switches.Queries.GetSwitchDetail;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         */
 
         [HttpGet("{id}/admin")]
-        public async Task<ActionResult<AdminGetSwitchDetailVm>> Get(int id)
+        public async Task<ActionResult<AdminSwitchDetailVm>> Get(int id)
         {
             try
             {
