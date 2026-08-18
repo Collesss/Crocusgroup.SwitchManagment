@@ -29,7 +29,7 @@ namespace Application.UnitTests.Switches.Commans
             //Arrange
             var deletingSwitch = new AdminDeleteSwitchCommand
             {
-                Id = 2
+                Id = 12
             };
 
             var handler = new AdminDeleteSwitchCommandHandler(new SwitchRepository(_dbContext, _mapper));

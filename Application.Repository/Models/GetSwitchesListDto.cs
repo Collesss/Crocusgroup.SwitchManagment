@@ -1,8 +1,6 @@
-﻿using MediatR;
-
-namespace Application.Switches.Queries.GetSwitchesList
+﻿namespace Application.Repository.Models
 {
-    public class AdminGetSwitchesListQuery : IRequest<AdminSwitchesListVm>
+    public class GetSwitchesListDto
     {
         public string SearchByIpOrName { get; set; }
 
@@ -12,12 +10,12 @@ namespace Application.Switches.Queries.GetSwitchesList
 
         public string SearchByHandler { get; set; }
 
-        public SwitchSortField SortField { get; set; } = SwitchSortField.Id;
+        public SwitchSortFieldDto SortField { get; set; } = SwitchSortFieldDto.Id;
 
         public bool SortAsc { get; set; } = true;
 
         public int PageSize { get; set; } = 10;
 
-        public int PageNumber {  get; set; } = 1;
+        public int PageNumber { get; set; } = 1;
     }
 }

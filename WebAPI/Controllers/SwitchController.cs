@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     public class SwitchController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
 
         public SwitchController(IMediator mediator, IMapper mapper)

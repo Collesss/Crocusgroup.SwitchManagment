@@ -24,7 +24,7 @@ namespace Application.Switches.Commands.Add
         {
             try
             {
-                return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, SwitchAddDto>(request), cancellationToken);
+                return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, AddSwitchDto>(request), cancellationToken);
             }
             catch(RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchAddIpAlreadyExist)
             {

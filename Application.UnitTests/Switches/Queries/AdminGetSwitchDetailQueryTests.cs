@@ -31,7 +31,7 @@ namespace Application.UnitTests.Switches.Queries
             //Arrange
             var getSwitch = new AdminGetSwitchDetailQuery
             {
-                Id = 2
+                Id = 12
             };
 
             var handler = new AdminGetSwitchDetailQueryHandler(new SwitchRepository(_dbContext, _mapper), _mapper);

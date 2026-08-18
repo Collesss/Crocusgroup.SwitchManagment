@@ -18,25 +18,27 @@ namespace Application.UnitTests.Common
                 //.UseSqlite("Data Source=:memory:")
                 //.UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
-            
-            using(var context = new SQLiteDbContext(opts))
+
+
+            var context = new SQLiteDbContext(opts);
+
+            context.Switches.AddRange(Enumerable.Range(1, 10).Select(i => new SwitchDbEntity
             {
-                context.Switches.Add(new SwitchDbEntity
-                {
-                    Id = 1,
-                    IpOrName = "Host1",
-                    Description = "Description1",
-                    Handler = "HPComware5",
-                    Location = "TestLocation",
-                    Login = "admin",
-                    Password = "1111",
-                    SuperPassword = "1234"
-                });
+                Id = i,
+                IpOrName = $"Host{i}",
+                Description = $"Description{i}",
+                Handler = "HPComware5",
+                Location = $"TestLocation{i}",
+                Login = "admin",
+                Password = "1111",
+                SuperPassword = "1234"
+            }));
 
-                context.SaveChanges();
-            }
+            context.SaveChanges();
 
-            return new SQLiteDbContext(opts);
+            context.ChangeTracker.Clear();
+
+            return context;
         }
 
         public static void Destroy(SQLiteDbContext dbContext)

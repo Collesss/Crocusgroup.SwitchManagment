@@ -20,9 +20,9 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<int> AddAsync(SwitchAddDto switchAddDto, CancellationToken cancellationToken = default)
+        public async Task<int> AddAsync(AddSwitchDto switchAddDto, CancellationToken cancellationToken = default)
         {
-            SwitchDbEntity switchEntity = _mapper.Map<SwitchAddDto, SwitchDbEntity>(switchAddDto);
+            SwitchDbEntity switchEntity = _mapper.Map<AddSwitchDto, SwitchDbEntity>(switchAddDto);
 
             try
             {
@@ -52,8 +52,15 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
         }
 
+        public Task<SwitchesListDto> Get(GetSwitchesListDto getDto, CancellationToken cancellationToken = default)
+        {
+
+
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<SwitchDto>> GetAll(CancellationToken cancellationToken = default) =>
-            _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchDto>>(await _dbContext.Switches.ToListAsync(cancellationToken)));
+            _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchDto>>(await _dbContext.Switches.ToListAsync(cancellationToken));
 
         public async Task<SwitchDto> GetById(int id, CancellationToken cancellationToken = default) =>
             _mapper.Map<SwitchDbEntity, SwitchDto>(await _dbContext.Switches.FindAsync([id], cancellationToken) ?? throw new RepositoryException(RepositoryErrorCode.SwitchGetByIdNotFound));

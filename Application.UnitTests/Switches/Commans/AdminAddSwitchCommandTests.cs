@@ -8,19 +8,21 @@ namespace Application.UnitTests.Switches.Commans
     public class AdminAddSwitchCommandTests : CommandTestBase
     {
         [Fact]
-        public async Task AdminAddSwitchCommand_AddSwitch_ReturnId2()
+        public async Task AdminAddSwitchCommand_AddSwitch_ReturnId11()
         {
             //Arrange
             var addingSwitch = new AdminAddSwitchCommand
             {
-                IpOrName = "Host2",
-                Location = "Location2",
-                Description = "Description2",
+                IpOrName = "Host11",
+                Location = "Location11",
+                Description = "Description11",
                 Handler = "HPComware5",
                 Login = "admin",
                 Password = "1111",
                 SuperPassword = "1234"
             };
+
+            int exceptedId = 11;
 
             var handler = new AdminAddSwitchCommandHandler(new SwitchRepository(_dbContext, _mapper), _mapper);
 
@@ -28,7 +30,7 @@ namespace Application.UnitTests.Switches.Commans
             int newId = await handler.Handle(addingSwitch, CancellationToken.None);
 
             //Assert
-            Assert.Equal(2, newId);
+            Assert.Equal(exceptedId, newId);
         }
 
         [Fact]
