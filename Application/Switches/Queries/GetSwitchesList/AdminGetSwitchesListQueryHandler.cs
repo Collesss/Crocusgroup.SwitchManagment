@@ -1,4 +1,8 @@
-﻿using Application.Repository.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Exceptions.Enums;
+using Application.Repository.Exceptions;
+using Application.Repository.Interfaces;
+using Application.Repository.Models;
 using MapsterMapper;
 using MediatR;
 
@@ -15,9 +19,16 @@ namespace Application.Switches.Queries.GetSwitchesList
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public Task<AdminSwitchesListVm> Handle(AdminGetSwitchesListQuery request, CancellationToken cancellationToken)
+        public async Task<AdminSwitchesListVm> Handle(AdminGetSwitchesListQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _mapper.Map<SwitchesListDto, AdminSwitchesListVm>(await _switchRepository.Get(_mapper.Map<AdminGetSwitchesListQuery, GetSwitchesListDto>(request), cancellationToken));
+            }
+            catch(RepositoryException)
+            {
+                throw new ApplicationLayerException(ApplicationErrorCode.Unknow);
+            }
         }
     }
 }

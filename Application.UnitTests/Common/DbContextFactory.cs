@@ -22,7 +22,7 @@ namespace Application.UnitTests.Common
 
             var context = new SQLiteDbContext(opts);
 
-            context.Switches.AddRange(Enumerable.Range(1, 10).Select(i => new SwitchDbEntity
+            context.Switches.AddRange(Enumerable.Range(1, 100).Select(i => new SwitchDbEntity
             {
                 Id = i,
                 IpOrName = $"Host{i}",

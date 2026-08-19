@@ -5,10 +5,10 @@ using Application.Common.Exceptions;
 
 namespace Application.UnitTests.Switches.Commans
 {
-    public class AdminAddSwitchCommandTests : CommandTestBase
+    public class AdminAddSwitchCommandTests : TestBase
     {
         [Fact]
-        public async Task AdminAddSwitchCommand_AddSwitch_ReturnId11()
+        public async Task AdminAddSwitchCommand_AddSwitch_ReturnId101()
         {
             //Arrange
             var addingSwitch = new AdminAddSwitchCommand
@@ -22,7 +22,7 @@ namespace Application.UnitTests.Switches.Commans
                 SuperPassword = "1234"
             };
 
-            int exceptedId = 11;
+            int exceptedId = 101;
 
             var handler = new AdminAddSwitchCommandHandler(new SwitchRepository(_dbContext, _mapper), _mapper);
 

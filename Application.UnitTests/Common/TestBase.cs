@@ -5,12 +5,12 @@ using System.Reflection;
 
 namespace Application.UnitTests.Common
 {
-    public class CommandTestBase : IDisposable
+    public class TestBase : IDisposable
     {
         protected readonly SQLiteDbContext _dbContext;
         protected readonly IMapper _mapper;
 
-        public CommandTestBase()
+        public TestBase()
         {
             _dbContext = DbContextFactory.Create();
 

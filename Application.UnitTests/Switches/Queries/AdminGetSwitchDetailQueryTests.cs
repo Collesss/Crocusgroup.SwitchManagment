@@ -5,7 +5,7 @@ using Infrastructure.Persistence.SQLite.Implementations;
 
 namespace Application.UnitTests.Switches.Queries
 {
-    public class AdminGetSwitchDetailQueryTests : CommandTestBase
+    public class AdminGetSwitchDetailQueryTests : TestBase
     {
         [Fact]
         public async Task AdminGetSwitchDetailQuery_GetExistSwitch_ReturnSwitchWithId1()
@@ -31,7 +31,7 @@ namespace Application.UnitTests.Switches.Queries
             //Arrange
             var getSwitch = new AdminGetSwitchDetailQuery
             {
-                Id = 12
+                Id = 100000
             };
 
             var handler = new AdminGetSwitchDetailQueryHandler(new SwitchRepository(_dbContext, _mapper), _mapper);

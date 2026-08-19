@@ -5,7 +5,7 @@ using Infrastructure.Persistence.SQLite.Implementations;
 
 namespace Application.UnitTests.Switches.Commans
 {
-    public class AdminDeleteSwitchCommandTests : CommandTestBase
+    public class AdminDeleteSwitchCommandTests : TestBase
     {
         [Fact]
         public async Task AdminDeleteSwitchCommand_DeleteExistSwitch_ExecutionWithoutErrors()
@@ -29,7 +29,7 @@ namespace Application.UnitTests.Switches.Commans
             //Arrange
             var deletingSwitch = new AdminDeleteSwitchCommand
             {
-                Id = 12
+                Id = 10000
             };
 
             var handler = new AdminDeleteSwitchCommandHandler(new SwitchRepository(_dbContext, _mapper));

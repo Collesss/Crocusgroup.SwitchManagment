@@ -63,15 +63,54 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
         }
 
-        public Task<SwitchesListDto> Get(GetSwitchesListDto getDto, CancellationToken cancellationToken = default)
+        public async Task<SwitchesListDto> Get(GetSwitchesListDto getDto, CancellationToken cancellationToken = default)
         {
+            ArgumentNullException.ThrowIfNull(getDto);
+
+            if (getDto.PageSize < 1 || getDto.PageSize > 100)
+                throw new ArgumentOutOfRangeException(nameof(getDto.PageSize), getDto.PageSize, "Page size must be between 1 and 100 inclusive.");
+
+            if (getDto.PageNumber < 1)
+                throw new ArgumentOutOfRangeException(nameof(getDto.PageNumber), getDto.PageNumber, "The page number must be greater than 0.");
+
+
+            /*
             var filter = getDto.GetType().GetProperties()
-                .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(getDto) is not null)
-                .Aggregate(PredicateBuilder.New<SwitchDbEntity>(true), (seed, prop) => seed.And(dbEnt => EF.Functions.Like($"{prop.Name}", prop.GetValue(getDto).ToString())));
+                .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(getDto) is string str && !string.IsNullOrEmpty(str))
+                .Aggregate(PredicateBuilder.New<SwitchDbEntity>(true), (seed, prop) => 
+                    seed.And(dbEnt => EF.Functions.Like($"{prop.Name.Replace("SearchBy", string.Empty)}", prop.GetValue(getDto).ToString())));
+            */
 
+            try
+            {
+                var notNullOrEmptySearchProps = getDto.GetType().GetProperties()
+                    .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(getDto) is string str && !string.IsNullOrEmpty(str));
 
+                string filter = string.Join(" AND ", notNullOrEmptySearchProps
+                    .Select((prop, i) => $"{prop.Name.Replace("SearchBy", string.Empty)}.Contains(@{i})"));
 
-            throw new NotImplementedException();
+                var args = notNullOrEmptySearchProps.Select(prop => prop.GetValue(getDto).ToString());
+
+                int totalCount = _dbContext.Switches.Count(filter, args);
+
+                int maxPages = (totalCount / getDto.PageSize) + ((totalCount % getDto.PageSize) > 0 ? 1 : 0);
+
+                var result = _mapper.Map<GetSwitchesListDto, SwitchesListDto>(getDto);
+                result.PageNumber = Math.Min(result.PageNumber, maxPages);
+                result.TotalCount = totalCount;
+                result.Switches = _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchLookupDto>>(await _dbContext.Switches
+                    .Where(filter, args)
+                    .OrderBy($"{getDto.SortField} {(getDto.SortAsc ? "ascending" : "descending")}")
+                    .Skip((getDto.PageNumber - 1) * getDto.PageSize)
+                    .Take(getDto.PageSize)
+                    .ToListAsync(cancellationToken));
+
+                return result;
+            }
+            catch(Exception e)
+            {
+                throw new RepositoryException(RepositoryErrorCode.Unknow, e);
+            }
         }
 
         public async Task<IEnumerable<SwitchDto>> GetAll(CancellationToken cancellationToken = default) =>
