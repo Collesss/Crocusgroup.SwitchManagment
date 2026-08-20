@@ -51,7 +51,7 @@ namespace Application.UnitTests.Switches.Commans
             var handler = new AdminAddSwitchCommandHandler(new SwitchRepository(_dbContext, _mapper), _mapper);
 
             //Act & Assert
-            await Assert.ThrowsAsync<ApplicationLayerException>(() => handler.Handle(addingExistSwitch, CancellationToken.None));
+            await Assert.ThrowsAsync<AppException>(() => handler.Handle(addingExistSwitch, CancellationToken.None));
         }
     }
 }

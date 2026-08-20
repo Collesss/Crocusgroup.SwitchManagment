@@ -27,7 +27,7 @@ namespace Application.Switches.Queries.GetSwitchDetail
             }
             catch(RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchGetByIdNotFound)
             {
-                throw new ApplicationLayerException(Common.Exceptions.Enums.ApplicationErrorCode.AdminGetSwitchDetailNotFound);
+                throw new AppException(Common.Exceptions.Enums.AppErrorCode.AdminGetSwitchDetailNotFound);
             }
         }
     }

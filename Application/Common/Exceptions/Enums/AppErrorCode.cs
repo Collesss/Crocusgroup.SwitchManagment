@@ -1,6 +1,6 @@
 ﻿namespace Application.Common.Exceptions.Enums
 {
-    public enum ApplicationErrorCode
+    public enum AppErrorCode
     {
         Unknow,
         AdminAddSwitchAlreadyExist,

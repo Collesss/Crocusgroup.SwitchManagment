@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             {
                 return Ok(await _mediator.Send(new AdminGetSwitchDetailQuery { Id = id }));
             }
-            catch(ApplicationLayerException e) when (e.ErrorCode == Application.Common.Exceptions.Enums.ApplicationErrorCode.AdminGetSwitchDetailNotFound)
+            catch(AppException e) when (e.ErrorCode == Application.Common.Exceptions.Enums.AppErrorCode.AdminGetSwitchDetailNotFound)
             {
                 return Problem(detail: "Switch with this 'id' not exist.", statusCode: StatusCodes.Status404NotFound);
             }

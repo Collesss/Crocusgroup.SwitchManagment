@@ -14,7 +14,6 @@ namespace Application.UnitTests.Common
 
             var opts = new DbContextOptionsBuilder<SQLiteDbContext>()
                 .UseSqlite(connection)
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 //.UseSqlite("Data Source=:memory:")
                 //.UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;

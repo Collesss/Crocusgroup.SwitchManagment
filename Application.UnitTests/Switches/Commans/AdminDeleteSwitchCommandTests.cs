@@ -35,7 +35,7 @@ namespace Application.UnitTests.Switches.Commans
             var handler = new AdminDeleteSwitchCommandHandler(new SwitchRepository(_dbContext, _mapper));
 
             //Act & Assert
-            await Assert.ThrowsAsync<ApplicationLayerException>(() => handler.Handle(deletingSwitch, CancellationToken.None));
+            await Assert.ThrowsAsync<AppException>(() => handler.Handle(deletingSwitch, CancellationToken.None));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Application.Switches.Commands.Delete
             }
             catch (RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchDeleteNotFound)
             {
-                throw new ApplicationLayerException(ApplicationErrorCode.AdminDeleteSwitchNotFound);
+                throw new AppException(AppErrorCode.AdminDeleteSwitchNotFound);
             }
         }
     }

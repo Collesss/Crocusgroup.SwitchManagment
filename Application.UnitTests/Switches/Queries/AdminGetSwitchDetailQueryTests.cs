@@ -37,7 +37,7 @@ namespace Application.UnitTests.Switches.Queries
             var handler = new AdminGetSwitchDetailQueryHandler(new SwitchRepository(_dbContext, _mapper), _mapper);
 
             //Act & Assert
-            await Assert.ThrowsAsync<ApplicationLayerException>(() => handler.Handle(getSwitch, CancellationToken.None));
+            await Assert.ThrowsAsync<AppException>(() => handler.Handle(getSwitch, CancellationToken.None));
         }
     }
 }

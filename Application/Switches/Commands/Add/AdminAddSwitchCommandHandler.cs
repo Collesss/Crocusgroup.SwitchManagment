@@ -28,7 +28,7 @@ namespace Application.Switches.Commands.Add
             }
             catch(RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchAddIpAlreadyExist)
             {
-                throw new ApplicationLayerException(ApplicationErrorCode.AdminAddSwitchAlreadyExist);
+                throw new AppException(AppErrorCode.AdminAddSwitchAlreadyExist);
             }
         }
     }

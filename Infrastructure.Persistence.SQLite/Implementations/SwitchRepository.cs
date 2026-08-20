@@ -69,11 +69,24 @@ namespace Infrastructure.Persistence.SQLite.Implementations
 
             if (getDto.PageSize < 1 || getDto.PageSize > 100)
                 throw new ArgumentOutOfRangeException(nameof(getDto.PageSize), getDto.PageSize, "Page size must be between 1 and 100 inclusive.");
-
+            
             if (getDto.PageNumber < 1)
                 throw new ArgumentOutOfRangeException(nameof(getDto.PageNumber), getDto.PageNumber, "The page number must be greater than 0.");
+            
+            
+            (string filter, object[] args) GetFilterAndArgs()
+            {
+                var notNullAndEmptySearchProps = getDto.GetType().GetProperties()
+                    .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(getDto) is string str && !string.IsNullOrEmpty(str));
 
+                string filter = string.Join(" AND ", notNullAndEmptySearchProps
+                    .Select((prop, i) => $"{prop.Name.Replace("SearchBy", string.Empty)}.Contains(@{i})"));
 
+                object[] args = notNullAndEmptySearchProps.Select(prop => prop.GetValue(getDto)).ToArray();
+
+                return (filter, args);
+            }
+            
             /*
             var filter = getDto.GetType().GetProperties()
                 .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(getDto) is string str && !string.IsNullOrEmpty(str))
@@ -83,27 +96,30 @@ namespace Infrastructure.Persistence.SQLite.Implementations
 
             try
             {
-                var notNullOrEmptySearchProps = getDto.GetType().GetProperties()
-                    .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(getDto) is string str && !string.IsNullOrEmpty(str));
-
-                string filter = string.Join(" AND ", notNullOrEmptySearchProps
-                    .Select((prop, i) => $"{prop.Name.Replace("SearchBy", string.Empty)}.Contains(@{i})"));
-
-                var args = notNullOrEmptySearchProps.Select(prop => prop.GetValue(getDto).ToString());
+                (string filter, object[] args) = GetFilterAndArgs();
 
                 int totalCount = _dbContext.Switches.Count(filter, args);
 
                 int maxPages = (totalCount / getDto.PageSize) + ((totalCount % getDto.PageSize) > 0 ? 1 : 0);
 
+                int actualPageNumber = Math.Min(getDto.PageNumber, maxPages);
+
                 var result = _mapper.Map<GetSwitchesListDto, SwitchesListDto>(getDto);
-                result.PageNumber = Math.Min(result.PageNumber, maxPages);
+                result.PageNumber = actualPageNumber;
                 result.TotalCount = totalCount;
                 result.Switches = _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchLookupDto>>(await _dbContext.Switches
                     .Where(filter, args)
                     .OrderBy($"{getDto.SortField} {(getDto.SortAsc ? "ascending" : "descending")}")
-                    .Skip((getDto.PageNumber - 1) * getDto.PageSize)
+                    .Skip((actualPageNumber - 1) * getDto.PageSize)
                     .Take(getDto.PageSize)
                     .ToListAsync(cancellationToken));
+                /*
+                //Not used because if the page number is greater than the last page number, an empty list of entities will be returned.
+                var test = _dbContext.Switches
+                    .Where(filter, args)
+                    .OrderBy($"{getDto.SortField} {(getDto.SortAsc ? "ascending" : "descending")}")
+                    .PageResult(getDto.PageNumber, getDto.PageSize);
+                */
 
                 return result;
             }

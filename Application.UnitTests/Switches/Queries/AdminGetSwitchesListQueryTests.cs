@@ -16,8 +16,8 @@ namespace Application.UnitTests.Switches.Queries
                 SearchByIpOrName = "1",
                 SortField = SwitchSortField.Id,
                 SortAsc = true,
-                PageNumber = 0,
-                PageSize = 25,
+                PageNumber = 4,
+                PageSize = 10,
             };
 
             var handler = new AdminGetSwitchesListQueryHandler(new SwitchRepository(_dbContext, _mapper), _mapper);

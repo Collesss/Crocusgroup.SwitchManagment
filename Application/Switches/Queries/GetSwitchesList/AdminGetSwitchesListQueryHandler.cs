@@ -25,9 +25,9 @@ namespace Application.Switches.Queries.GetSwitchesList
             {
                 return _mapper.Map<SwitchesListDto, AdminSwitchesListVm>(await _switchRepository.Get(_mapper.Map<AdminGetSwitchesListQuery, GetSwitchesListDto>(request), cancellationToken));
             }
-            catch(RepositoryException)
+            catch(RepositoryException e)
             {
-                throw new ApplicationLayerException(ApplicationErrorCode.Unknow);
+                throw new AppException(AppErrorCode.Unknow);
             }
         }
     }
