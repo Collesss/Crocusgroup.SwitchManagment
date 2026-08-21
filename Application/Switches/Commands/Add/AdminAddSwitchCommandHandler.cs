@@ -1,7 +1,5 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Exceptions.Enums;
 using Application.Repository.Exceptions;
-using Application.Repository.Exceptions.Enums;
 using Application.Repository.Interfaces;
 using Application.Repository.Models;
 using MapsterMapper;
@@ -26,9 +24,13 @@ namespace Application.Switches.Commands.Add
             {
                 return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, AddSwitchDto>(request), cancellationToken);
             }
-            catch(RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchAddIpAlreadyExist)
+            catch(ConfilictRepositoryException e)
             {
-                throw new AppException(AppErrorCode.AdminAddSwitchAlreadyExist);
+                throw new ConflictAppException("Switch with this value field \"IpOrName\" already exists.", e);
+            }
+            catch(Exception e)
+            {
+                throw new AppException("Unknow error, see innerException", e);
             }
         }
     }

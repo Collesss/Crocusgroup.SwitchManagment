@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Common.Exceptions
+﻿namespace Application.Common.Exceptions
 {
-    internal class NotFoundAppException
+    public class NotFoundAppException : AppException
     {
+        public NotFoundAppException() { }
+
+        public NotFoundAppException(string message) : base(message) { }
+
+        public NotFoundAppException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

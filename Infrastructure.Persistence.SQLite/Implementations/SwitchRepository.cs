@@ -1,13 +1,10 @@
 ﻿using Application.Repository.Exceptions;
-using Application.Repository.Exceptions.Enums;
 using Application.Repository.Interfaces;
 using Application.Repository.Models;
 using Infrastructure.Persistence.SQLite.Models;
-using LinqKit;
 using MapsterMapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Dynamic.Core;
 
 namespace Infrastructure.Persistence.SQLite.Implementations
@@ -23,48 +20,31 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<int> AddAsync(AddSwitchDto switchAddDto, CancellationToken cancellationToken = default)
+        public async Task<SwitchDto> GetById(int id, CancellationToken cancellationToken = default)
         {
-            SwitchDbEntity switchEntity = _mapper.Map<AddSwitchDto, SwitchDbEntity>(switchAddDto);
+            #region validation
+            if (id < 1)
+                throw new ArgumentOutOfRangeException(nameof(id), id, "Param \"id\" cannot be less than 1.");
+            #endregion
 
             try
             {
-                var addEntryEntity = _dbContext.Switches.Add(switchEntity);
-
-                await _dbContext.SaveChangesAsync(cancellationToken);
-
-                return addEntryEntity.Entity.Id;
+                return _mapper.Map<SwitchDbEntity, SwitchDto>(await _dbContext.Switches.FindAsync([id], cancellationToken) ?? 
+                    throw new NotFoundRepositoryException("Switch with this id not found."));
             }
-            catch(DbUpdateException e) when (e.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19)
+            catch (NotFoundRepositoryException)
             {
-                throw new RepositoryException(RepositoryErrorCode.SwitchAddIpAlreadyExist, e);
+                throw;
             }
             catch (Exception e)
             {
-                throw new RepositoryException(RepositoryErrorCode.Unknow, e);
-            }
-        }
-
-        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                _dbContext.Switches.Remove(new SwitchDbEntity { Id = id });
-
-                await _dbContext.SaveChangesAsync(cancellationToken);
-            }
-            catch(DbUpdateConcurrencyException e)
-            {
-                throw new RepositoryException(RepositoryErrorCode.SwitchDeleteNotFound, e);
-            }
-            catch(Exception e)
-            {
-                throw new RepositoryException(RepositoryErrorCode.Unknow, e);
+                throw new RepositoryException("Unknow error, see innerException.", e);
             }
         }
 
         public async Task<SwitchesListDto> Get(GetSwitchesListDto getDto, CancellationToken cancellationToken = default)
         {
+            #region validation
             ArgumentNullException.ThrowIfNull(getDto);
 
             if (getDto.PageSize < 1 || getDto.PageSize > 100)
@@ -72,8 +52,21 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             
             if (getDto.PageNumber < 1)
                 throw new ArgumentOutOfRangeException(nameof(getDto.PageNumber), getDto.PageNumber, "The page number must be greater than 0.");
-            
-            
+
+            {
+                var searchProps = getDto.GetType().GetProperties()
+                    .Where(prop => prop.PropertyType.Name == "System.String"/* && prop.PropertyType.Name.StartsWith("SearchBy")*/);
+
+                foreach (var prop in searchProps)
+                {
+                    string propValue = prop.GetValue(getDto).ToString();
+
+                    if (propValue.Length > 100)
+                        throw new ArgumentOutOfRangeException($"{prop.Name}.Length", propValue.Length, $"The length of the string parameter \"{prop.Name}\" cannot be greater than 100.");
+                }
+            }
+            #endregion
+
             (string filter, object[] args) GetFilterAndArgs()
             {
                 var notNullAndEmptySearchProps = getDto.GetType().GetProperties()
@@ -93,7 +86,7 @@ namespace Infrastructure.Persistence.SQLite.Implementations
                 .Aggregate(PredicateBuilder.New<SwitchDbEntity>(true), (seed, prop) => 
                     seed.And(dbEnt => EF.Functions.Like($"{prop.Name.Replace("SearchBy", string.Empty)}", prop.GetValue(getDto).ToString())));
             */
-
+            
             try
             {
                 (string filter, object[] args) = GetFilterAndArgs();
@@ -125,26 +118,113 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
             catch(Exception e)
             {
-                throw new RepositoryException(RepositoryErrorCode.Unknow, e);
+                throw new RepositoryException("Unknow error, see innerException.", e);
             }
         }
 
-        public async Task<IEnumerable<SwitchDto>> GetAll(CancellationToken cancellationToken = default) =>
-            _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchDto>>(await _dbContext.Switches.ToListAsync(cancellationToken));
-
-        public async Task<SwitchDto> GetById(int id, CancellationToken cancellationToken = default)
+        public async Task<int> AddAsync(AddSwitchDto switchAddDto, CancellationToken cancellationToken = default)
         {
+            #region validation
+            ArgumentNullException.ThrowIfNull(switchAddDto);
+            ArgumentNullException.ThrowIfNull(switchAddDto.IpOrName);
+
+            {
+                var stringProps = switchAddDto.GetType().GetProperties()
+                    .Where(prop => prop.PropertyType.Name == "System.String");
+
+                foreach (var prop in stringProps)
+                {
+                    string propValue = prop.GetValue(switchAddDto)?.ToString();
+
+                    if (propValue is not null && propValue.Length > 100)
+                        throw new ArgumentOutOfRangeException(prop.Name, propValue, $"The length of the string parameter \"{prop.Name}\" cannot be greater than 100.");
+                }
+            }
+            #endregion
+
             try
             {
-                return _mapper.Map<SwitchDbEntity, SwitchDto>(await _dbContext.Switches.FindAsync([id], cancellationToken) ?? throw new RepositoryException(RepositoryErrorCode.SwitchGetByIdNotFound));
+                SwitchDbEntity switchEntity = _mapper.Map<AddSwitchDto, SwitchDbEntity>(switchAddDto);
+
+                var addEntryEntity = _dbContext.Switches.Add(switchEntity);
+
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                return addEntryEntity.Entity.Id;
             }
-            catch(RepositoryException)
+            catch(DbUpdateException e) when (e.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19)
             {
-                throw;
+                throw new ConfilictRepositoryException("Switch with this value field \"IpOrName\" already exists.", e);
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("Unknow error, see innerException.", e);
+            }
+        }
+
+        public async Task UpdateAsync(UpdateSwitchDto switchUpdateDto, CancellationToken cancellationToken = default)
+        {
+            #region validation
+            ArgumentNullException.ThrowIfNull(switchUpdateDto);
+
+            if (switchUpdateDto.Id < 1)
+                throw new ArgumentOutOfRangeException(nameof(switchUpdateDto.Id), switchUpdateDto.Id, "Param \"switchUpdateDto.Id\" cannot be less than 1.");
+
+            if (switchUpdateDto.Id < 1)
+
+
+            {
+                var stringProps = switchUpdateDto.GetType().GetProperties()
+                    .Where(prop => prop.PropertyType.Name == "System.String");
+
+                foreach (var prop in stringProps)
+                {
+                    string propValue = prop.GetValue(switchUpdateDto)?.ToString();
+
+                    if (propValue is not null && propValue.Length > 100)
+                        throw new ArgumentOutOfRangeException(prop.Name, propValue, $"The length of the string parameter \"{prop.Name}\" cannot be greater than 100.");
+                }
+            }
+            #endregion
+
+            try
+            {
+                var updateSwitch = _mapper.Map<UpdateSwitchDto, SwitchDbEntity>(switchUpdateDto);
+
+                _dbContext.Update(updateSwitch);
+
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException e)
+            {
+                throw new ConfilictRepositoryException("Switch with this value field \"IpOrName\" already exists.", e);
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("Unknow error, see innerException.", e);
+            }
+        }
+        
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            #region validation
+            if (id < 1)
+                throw new ArgumentOutOfRangeException(nameof(id), id, "Param \"id\" cannot be less than 1.");
+            #endregion
+
+            try
+            {
+                _dbContext.Switches.Remove(new SwitchDbEntity { Id = id });
+
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch(DbUpdateConcurrencyException e)
+            {
+                throw new NotFoundRepositoryException("Switch with this id not found.", e);
             }
             catch(Exception e)
             {
-                throw new RepositoryException(RepositoryErrorCode.Unknow, e);
+                throw new RepositoryException("Unknow error, see innerException.", e);
             }
         }
     }
