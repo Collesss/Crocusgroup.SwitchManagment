@@ -1,6 +1,6 @@
 ﻿namespace Application.SwitchHandling.Handler.Models
 {
-    public sealed class PortConfigTrunk : PortConfig
+    public sealed class PortTrunkConfig : PortConfig
     {
         public IEnumerable<int> TrunkVlans { get; set; }
     }

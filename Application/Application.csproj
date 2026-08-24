@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application.Repository\Application.Repository.csproj" />
+    <ProjectReference Include="..\Application.SwitchHandling.Provider\Application.SwitchHandling.Provider.csproj" />
   </ItemGroup>
 
 </Project>

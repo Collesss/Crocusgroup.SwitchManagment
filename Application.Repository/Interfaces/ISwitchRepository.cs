@@ -42,7 +42,7 @@ namespace Application.Repository.Interfaces
         /// <exception cref="ArgumentOutOfRangeException">Throw if length next string params: switchAddDto.IpOrName, switchAddDto.Location, switchAddDto.Description, switchAddDto.Handler,
         /// switchAddDto.Login, switchAddDto.Password, switchAddDto.SuperPassword; great than 100.</exception>
         /// <returns>New switch id.</returns>
-        public Task<int> AddAsync(AddSwitchDto switchAddDto, CancellationToken cancellationToken = default);
+        public Task<int> AddAsync(SwitchDto switchAddDto, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update switch.
@@ -56,7 +56,7 @@ namespace Application.Repository.Interfaces
         /// <exception cref="ArgumentNullException">Throw if param switchUpdateDto is null.</exception>
         /// <exception cref="ArgumentException"></exception>
         /// <returns></returns>
-        public Task UpdateAsync(UpdateSwitchDto switchUpdateDto, CancellationToken cancellationToken = default);
+        public Task UpdateAsync(SwitchDto switchUpdateDto, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete switch.

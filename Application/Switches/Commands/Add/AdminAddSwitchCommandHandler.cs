@@ -22,7 +22,7 @@ namespace Application.Switches.Commands.Add
         {
             try
             {
-                return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, AddSwitchDto>(request), cancellationToken);
+                return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, SwitchDto>(request), cancellationToken);
             }
             catch(ConfilictRepositoryException e)
             {

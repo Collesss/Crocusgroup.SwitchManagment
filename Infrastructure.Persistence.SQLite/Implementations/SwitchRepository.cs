@@ -122,7 +122,7 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
         }
 
-        public async Task<int> AddAsync(AddSwitchDto switchAddDto, CancellationToken cancellationToken = default)
+        public async Task<int> AddAsync(SwitchDto switchAddDto, CancellationToken cancellationToken = default)
         {
             #region validation
             ArgumentNullException.ThrowIfNull(switchAddDto);
@@ -144,7 +144,7 @@ namespace Infrastructure.Persistence.SQLite.Implementations
 
             try
             {
-                SwitchDbEntity switchEntity = _mapper.Map<AddSwitchDto, SwitchDbEntity>(switchAddDto);
+                SwitchDbEntity switchEntity = _mapper.Map<SwitchDto, SwitchDbEntity>(switchAddDto);
 
                 var addEntryEntity = _dbContext.Switches.Add(switchEntity);
 
@@ -162,7 +162,7 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
         }
 
-        public async Task UpdateAsync(UpdateSwitchDto switchUpdateDto, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(SwitchDto switchUpdateDto, CancellationToken cancellationToken = default)
         {
             #region validation
             ArgumentNullException.ThrowIfNull(switchUpdateDto);
@@ -189,7 +189,7 @@ namespace Infrastructure.Persistence.SQLite.Implementations
 
             try
             {
-                var updateSwitch = _mapper.Map<UpdateSwitchDto, SwitchDbEntity>(switchUpdateDto);
+                var updateSwitch = _mapper.Map<SwitchDto, SwitchDbEntity>(switchUpdateDto);
 
                 _dbContext.Update(updateSwitch);
 

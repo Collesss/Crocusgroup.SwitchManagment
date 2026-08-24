@@ -1,0 +1,17 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Ports.Commands.Trunk
+{
+    public class ConfigurePortTrunkCommandHandler : IRequestHandler<ConfigurePortTrunkCommand>
+    {
+        public Task Handle(ConfigurePortTrunkCommand request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

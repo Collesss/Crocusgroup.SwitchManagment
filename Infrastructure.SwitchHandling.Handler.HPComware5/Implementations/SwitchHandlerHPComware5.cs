@@ -29,7 +29,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             return switchInfo;
         }
 
-        public async Task ConfigurePort(PortConfigAccess portConfig, CancellationToken cancellationToken = default)
+        public async Task ConfigurePort(PortAccessConfig portConfig, CancellationToken cancellationToken = default)
         {
             ValidateConfig(portConfig);
 
@@ -39,7 +39,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             }, portConfig, cancellationToken);
         }
 
-        public async Task ConfigurePort(PortConfigTrunk portConfig, CancellationToken cancellationToken = default)
+        public async Task ConfigurePort(PortTrunkConfig portConfig, CancellationToken cancellationToken = default)
         {
             ValidateConfig(portConfig);
 
@@ -70,7 +70,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             ArgumentException.ThrowIfNullOrWhiteSpace(config.InterfaceName);
         }
 
-        private void ValidateConfig(PortConfigTrunk config)
+        private void ValidateConfig(PortTrunkConfig config)
         {
             ValidateConfig(config as PortConfig);
 
@@ -93,7 +93,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             */
         }
 
-        private void ValidateConfig(PortConfigAccess config)
+        private void ValidateConfig(PortAccessConfig config)
         {
             ValidateConfig(config as PortConfig);
 

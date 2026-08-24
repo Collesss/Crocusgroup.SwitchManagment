@@ -17,6 +17,23 @@ namespace Infrastructure.Persistence.SQLite.ModelsConfigurations
             builder.HasIndex(@switch => @switch.IpOrName)
                 .IsUnique();
 
+            builder.Property(@switch => @switch.Location)
+                .HasMaxLength(100);
+
+            builder.Property(@switch => @switch.Description)
+                .HasMaxLength(100);
+
+            builder.Property(@switch => @switch.Handler)
+                .HasMaxLength(100);
+
+            builder.Property(@switch => @switch.Login)
+                .HasMaxLength(100);
+
+            builder.Property(@switch => @switch.Password)
+                .HasMaxLength(100);
+
+            builder.Property(@switch => @switch.SuperPassword)
+                .HasMaxLength(100);
         }
     }
 }
