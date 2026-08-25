@@ -59,8 +59,6 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             ArgumentNullException.ThrowIfNull(config);
             ArgumentException.ThrowIfNullOrWhiteSpace(config.IpOrName);
             ArgumentException.ThrowIfNullOrWhiteSpace(config.Login);
-            ArgumentNullException.ThrowIfNull(config.Password);
-            ArgumentNullException.ThrowIfNull(config.SuperPassword);
         }
 
         private void ValidateConfig(PortConfig config)

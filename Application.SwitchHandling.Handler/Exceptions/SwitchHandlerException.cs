@@ -4,16 +4,6 @@ namespace Application.SwitchHandling.Handler.Exceptions
 {
     public class SwitchHandlerException : Exception
     {
-        private static readonly Dictionary<SwitchHandlerErrorType, string> ErrorMessage = new() 
-        {
-            [SwitchHandlerErrorType.Unknown] = "Unknown",
-            [SwitchHandlerErrorType.HostNotExistOrUnreac] = "HostNotExistOrUnreac",
-            [SwitchHandlerErrorType.WrongLoginOrPass] = "WrongLoginOrPass",
-            [SwitchHandlerErrorType.WrongSuperPass] = "WrongSuperPass",
-            [SwitchHandlerErrorType.WrongInterface] = "WrongInterface",
-            [SwitchHandlerErrorType.VLANNotExist] = "VLANNotExist"
-        };
-
         public SwitchHandlerErrorType ErrorType { get; private set; }
 
 
@@ -23,14 +13,25 @@ namespace Application.SwitchHandling.Handler.Exceptions
 
         public SwitchHandlerException(string message, Exception innerException) : base(message, innerException) { }
 
-        public SwitchHandlerException(SwitchHandlerErrorType errorType) : base(ErrorMessage[errorType])
+        public SwitchHandlerException(SwitchHandlerErrorType errorType) : base(GetErrorMessage(errorType))
         {
             ErrorType = errorType;
         }
 
-        public SwitchHandlerException(SwitchHandlerErrorType errorType, Exception innerException) : base(ErrorMessage[errorType], innerException)
+        public SwitchHandlerException(SwitchHandlerErrorType errorType, Exception innerException) : base(GetErrorMessage(errorType), innerException)
         {
             ErrorType = errorType;
         }
+
+        private static string GetErrorMessage(SwitchHandlerErrorType errorType) =>
+            errorType switch
+            {
+                SwitchHandlerErrorType.HostNotExistOrUnreac => "HostNotExistOrUnreac",
+                SwitchHandlerErrorType.WrongLoginOrPass => "WrongLoginOrPass",
+                SwitchHandlerErrorType.WrongSuperPass => "WrongSuperPass",
+                SwitchHandlerErrorType.WrongInterface => "WrongInterface",
+                SwitchHandlerErrorType.VLANNotExist => "VLANNotExist",
+                _ => "Unknown",
+            };
     }
 }

@@ -1,14 +1,19 @@
 ﻿using Application.SwitchHandling.Handler.Interfaces;
+using Application.SwitchHandling.Provider.Exceptions;
+
 
 namespace Application.SwitchHandling.Provider.Interfaces
 {
     public interface ISwitchHandlerProvider
     {
         /// <summary>
-        /// Return ISwitchHandler by name, if not exsist or while get thrown exception return null.
+        /// Return ISwitchHandler by name.
         /// </summary>
         /// <param name="handlerName">Handler name/</param>
-        /// <returns>SwitchHandler, if not exsist null.</returns>
+        /// <exception cref="ArgumentNullException">Throw if param "handlerName" is null.</exception>
+        /// <exception cref="ApplicationException">Throw if param "handlerName" is empty or contains only whitespaces.</exception>
+        /// <exception cref="NotFoundHandlerProviderException">Throw if handler not found.</exception>
+        /// <returns>SwitchHandler</returns>
         public ISwitchHandler GetHandler(string handlerName);
     }
 }
