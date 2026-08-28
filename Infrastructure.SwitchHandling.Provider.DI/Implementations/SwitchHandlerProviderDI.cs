@@ -16,8 +16,19 @@ namespace Infrastructure.SwitchHandling.Provider.DI.Implementations
         {
             ArgumentException.ThrowIfNullOrEmpty(handlerName);
 
-            return _serviceProvider.GetKeyedService<ISwitchHandler>(handlerName) ?? 
-                throw new NotFoundHandlerProviderException("Handler with this name not found.");
+            try
+            {
+                return _serviceProvider.GetKeyedService<ISwitchHandler>(handlerName) ??
+                    throw new NotFoundHandlerProviderException("Handler with this name not found.");
+            }
+            catch(NotFoundHandlerProviderException)
+            {
+                throw;
+            }
+            catch(Exception e)
+            {
+                throw new HandlerProviderException("An unknown error occurred while getting the handler, see inner exception.", e);
+            }
         }
     }
 }

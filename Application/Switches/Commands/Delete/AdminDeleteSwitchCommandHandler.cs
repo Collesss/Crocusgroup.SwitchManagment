@@ -1,7 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Exceptions.Enums;
-using Application.Repository.Exceptions;
-using Application.Repository.Exceptions.Enums;
 using Application.Repository.Interfaces;
 using MediatR;
 
@@ -22,9 +19,13 @@ namespace Application.Switches.Commands.Delete
             {
                 await _switchRepository.DeleteAsync(request.Id, cancellationToken);
             }
-            catch (RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchDeleteNotFound)
+            catch(AppException)
             {
-                throw new AppException(AppErrorCode.AdminDeleteSwitchNotFound);
+                throw;
+            }
+            catch(Exception e)
+            {
+                throw new AppException("An unknown error occurred while deleting the switch, see innerException.", e);
             }
         }
     }

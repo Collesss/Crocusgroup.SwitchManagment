@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.SwitchHandling.Handler.Exceptions
+﻿namespace Application.SwitchHandling.Handler.Exceptions
 {
-    internal class WrongLoginOrPassSwitchHandlerException
+    public class WrongLoginOrPassSwitchHandlerException : SwitchHandlerException
     {
+        public WrongLoginOrPassSwitchHandlerException() { }
+
+        public WrongLoginOrPassSwitchHandlerException(string message) : base(message) { }
+
+        public WrongLoginOrPassSwitchHandlerException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

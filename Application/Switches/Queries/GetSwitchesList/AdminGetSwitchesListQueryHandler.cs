@@ -1,6 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Exceptions.Enums;
-using Application.Repository.Exceptions;
 using Application.Repository.Interfaces;
 using Application.Repository.Models;
 using MapsterMapper;
@@ -25,9 +23,13 @@ namespace Application.Switches.Queries.GetSwitchesList
             {
                 return _mapper.Map<SwitchesListDto, AdminSwitchesListVm>(await _switchRepository.Get(_mapper.Map<AdminGetSwitchesListQuery, GetSwitchesListDto>(request), cancellationToken));
             }
-            catch(RepositoryException e)
+            catch (AppException)
             {
-                throw new AppException(AppErrorCode.Unknow);
+                throw;
+            }
+            catch(Exception e)
+            {
+                throw new AppException("An unknown error occurred while getting the list of switches, see the InnerException.", e);
             }
         }
     }

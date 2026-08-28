@@ -1,6 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.Repository.Exceptions;
-using Application.Repository.Exceptions.Enums;
 using Application.Repository.Interfaces;
 using Application.Repository.Models;
 using MapsterMapper;
@@ -25,9 +23,13 @@ namespace Application.Switches.Queries.GetSwitchDetail
             {
                 return _mapper.Map<SwitchDto, AdminSwitchDetailVm>(await _switchRepository.GetById(request.Id, cancellationToken));
             }
-            catch(RepositoryException e) when (e.BaseErrorCode == RepositoryErrorCode.SwitchGetByIdNotFound)
+            catch(AppException)
             {
-                throw new AppException(Common.Exceptions.Enums.AppErrorCode.AdminGetSwitchDetailNotFound);
+                throw;
+            }
+            catch(Exception e)
+            {
+                throw new AppException("An unknown error occurred while retrieving the switch, see innerException.", e);
             }
         }
     }

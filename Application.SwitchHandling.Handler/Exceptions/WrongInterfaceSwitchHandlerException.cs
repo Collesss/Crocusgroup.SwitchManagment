@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.SwitchHandling.Handler.Exceptions
+﻿namespace Application.SwitchHandling.Handler.Exceptions
 {
-    internal class WrongInterfaceSwitchHandlerException
+    public class WrongInterfaceSwitchHandlerException : SwitchHandlerException
     {
+        public WrongInterfaceSwitchHandlerException() { }
+
+        public WrongInterfaceSwitchHandlerException(string message) : base(message) { }
+
+        public WrongInterfaceSwitchHandlerException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.SwitchHandling.Handler.Exceptions
+﻿namespace Application.SwitchHandling.Handler.Exceptions
 {
-    internal class HostNotExistOrUnreachableSwitchHandlerException
+    public class HostNotExistOrUnreachableSwitchHandlerException : SwitchHandlerException
     {
+        public HostNotExistOrUnreachableSwitchHandlerException() { }
+
+        public HostNotExistOrUnreachableSwitchHandlerException(string message) : base(message) { }
+
+        public HostNotExistOrUnreachableSwitchHandlerException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using Application.Common.Exceptions;
 using Application.Interfaces;
-using Application.Repository.Exceptions;
 using Application.Repository.Interfaces;
 using Application.Repository.Models;
 using Application.SwitchHandling.Handler.Models;
-using Application.SwitchHandling.Provider.Exceptions;
 using Application.SwitchHandling.Provider.Interfaces;
 using Mapster;
 using MapsterMapper;
@@ -39,22 +37,13 @@ namespace Application.Ports.Commands.Access
 
                 await handler.ConfigurePort(config, cancellationToken);
             }
-            catch (NotFoundHandlerProviderException e)
-            {
-                throw;
-            }
-            catch(NotFoundRepositoryException e)
-            {
-                throw;
-            }
-
-            catch (ApplicationException)
+            catch (AppException)
             {
                 throw;
             }
             catch (Exception e)
             {
-                throw new AppException("Unknow error, see innerException", e);
+                throw new AppException("An unknown error occurred while setting the port as access, see InnerException.", e);
             }
         }
     }

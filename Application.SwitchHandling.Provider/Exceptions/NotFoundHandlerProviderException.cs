@@ -1,6 +1,6 @@
 ﻿namespace Application.SwitchHandling.Provider.Exceptions
 {
-    public class NotFoundHandlerProviderException : Exception
+    public class NotFoundHandlerProviderException : HandlerProviderException
     {
         public NotFoundHandlerProviderException() : base() { }
 

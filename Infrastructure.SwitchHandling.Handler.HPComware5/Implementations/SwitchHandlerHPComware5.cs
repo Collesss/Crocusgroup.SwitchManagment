@@ -1,5 +1,4 @@
 ﻿using Application.SwitchHandling.Handler.Exceptions;
-using Application.SwitchHandling.Handler.Exceptions.Enums;
 using Application.SwitchHandling.Handler.Interfaces;
 using Application.SwitchHandling.Handler.Models;
 using Renci.SshNet;
@@ -74,8 +73,8 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
 
             ArgumentNullException.ThrowIfNull(config.TrunkVlans);
 
-            if (!config.TrunkVlans.All(vlan => vlan > 0))
-                throw new ArgumentException("VLAN cant be less 1.");
+            if (!config.TrunkVlans.All(vlan => vlan > 0 && vlan < 4096))
+                throw new ArgumentOutOfRangeException(nameof(config.TrunkVlans), "VLAN cant be less 1 or great than 4095.");
 
             /*
             if (config.TrunkVlans.CountBy(vlan => vlan).Any(vlanCount => vlanCount.Value > 1))
@@ -95,8 +94,8 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
         {
             ValidateConfig(config as PortConfig);
 
-            if (config.AccessVlan < 1)
-                throw new ArgumentException("VLAN cant be less 1.");
+            if (config.AccessVlan < 1 && config.AccessVlan > 4095)
+                throw new ArgumentOutOfRangeException(nameof(config.AccessVlan), config.AccessVlan, "VLAN cant be less 1 or great than 4095.");
         }
         #endregion
 
@@ -121,11 +120,11 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             }
             catch (SshAuthenticationException e) when (e.Message == "Permission denied (password).")
             {
-                throw new SwitchHandlerException(SwitchHandlerErrorType.WrongLoginOrPass, e);
+                throw new WrongLoginOrPassSwitchHandlerException("Wrong login or pass.", e);
             }
             catch (SocketException e)
             {
-                throw new SwitchHandlerException(SwitchHandlerErrorType.HostNotExistOrUnreac, e);
+                throw new HostNotExistOrUnreachableSwitchHandlerException("Host not exist or unreachable.", e);
             }
 
             return sshClient;
@@ -195,7 +194,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             shellStream.WriteLine("Y");
             shellStream.WriteLine(superPassword);
 
-            shellStream.Expect(new ExpectAction("Error: Invalid password.", _ => throw new SwitchHandlerException(SwitchHandlerErrorType.WrongSuperPass)),
+            shellStream.Expect(new ExpectAction("Error: Invalid password.", _ => throw new WrongSuperPassSwitchHandlerException("Wrong super pass.")),
                 new ExpectAction("Warning: Now you enter an all-command mode for developer's testing, some commands may affect operation by wrong use, please carefully use it with our engineer's direction.", _ => { }));
 
             shellStream.WriteLine("screen-length disable");
@@ -238,7 +237,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             shellStream.WriteLineAndExpect($"interface {interfaceName}");
 
             shellStream.Expect(new ExpectAction("% Wrong parameter found at '^' position.", _ =>
-                throw new SwitchHandlerException(SwitchHandlerErrorType.WrongInterface)),
+                throw new WrongInterfaceSwitchHandlerException("Wrong interface.")),
                         new ExpectAction(SystemViewPromtShellRegex, _ => { }));
         }
 
@@ -256,7 +255,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             shellStream.WriteLineAndExpect($"port link-type {Enum.GetName(linkType)}");
 
             shellStream.Expect(new ExpectAction("% Unrecognized command found at '^' position.", _ =>
-                    throw new SwitchHandlerException(SwitchHandlerErrorType.WrongInterface)),
+                    throw new WrongInterfaceSwitchHandlerException("Wrong interface.")),
                             new ExpectAction(SystemViewPromtShellRegex, _ => { }));
         }
 
@@ -265,7 +264,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             IEnumerable<int> vlansOnSwitch = GetOnlyVlanNums(shellStream);
 
             if (!vlans.All(vl => vlansOnSwitch.Any(vlOnSw => vl == vlOnSw)))
-                throw new SwitchHandlerException(SwitchHandlerErrorType.VLANNotExist);
+                throw new VLANNotExistSwitchHandlerException("Vlan not exists.");
         }
 
         private async Task CommonShellStream(Action<ShellStream> action, ConnectConfig connectConfig, CancellationToken cancellationToken = default)
@@ -283,9 +282,9 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw new SwitchHandlerException(SwitchHandlerErrorType.Unknown, ex);
+                throw new SwitchHandlerException("An unknown error occurred, see innerException.", e);
             }
             finally
             {

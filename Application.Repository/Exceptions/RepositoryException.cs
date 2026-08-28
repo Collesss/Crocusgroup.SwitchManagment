@@ -1,6 +1,8 @@
-﻿namespace Application.Repository.Exceptions
+﻿using Application.Common.Exceptions;
+
+namespace Application.Repository.Exceptions
 {
-    public class RepositoryException : Exception
+    public class RepositoryException : AppException
     {
         public RepositoryException() { }
 

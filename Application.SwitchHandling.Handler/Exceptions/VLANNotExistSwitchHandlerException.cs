@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.SwitchHandling.Handler.Exceptions
+﻿namespace Application.SwitchHandling.Handler.Exceptions
 {
-    internal class VLANNotExistSwitchHandlerException
+    public class VLANNotExistSwitchHandlerException : SwitchHandlerException
     {
+        public VLANNotExistSwitchHandlerException() { }
+
+        public VLANNotExistSwitchHandlerException(string message) : base(message) { }
+
+        public VLANNotExistSwitchHandlerException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

@@ -9,8 +9,7 @@ namespace Application.Common.MapsterConfigurations
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<AdminAddSwitchCommand, AddSwitchDto>();
-            config.NewConfig<AdminAddSwitchCommand, AddSwitchDto>();
+            config.NewConfig<AdminAddSwitchCommand, SwitchDto>();
             config.NewConfig<AdminGetSwitchesListQuery, GetSwitchesListDto>();
             config.NewConfig<SwitchSortField, SwitchSortFieldDto>();
             config.NewConfig<SwitchSortFieldDto, SwitchSortField>();

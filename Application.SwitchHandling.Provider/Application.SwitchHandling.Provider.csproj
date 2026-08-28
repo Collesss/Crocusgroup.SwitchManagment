@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application.Common\Application.Common.csproj" />
     <ProjectReference Include="..\Application.SwitchHandling.Handler\Application.SwitchHandling.Handler.csproj" />
   </ItemGroup>
 

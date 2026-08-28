@@ -1,5 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.Repository.Exceptions;
 using Application.Repository.Interfaces;
 using Application.Repository.Models;
 using MapsterMapper;
@@ -24,13 +23,13 @@ namespace Application.Switches.Commands.Add
             {
                 return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, SwitchDto>(request), cancellationToken);
             }
-            catch(ConfilictRepositoryException e)
+            catch(AppException)
             {
-                throw new ConflictAppException("Switch with this value field \"IpOrName\" already exists.", e);
+                throw;
             }
             catch(Exception e)
             {
-                throw new AppException("Unknow error, see innerException", e);
+                throw new AppException("An unknown error occurred while adding the switch, see innerException.", e);
             }
         }
     }

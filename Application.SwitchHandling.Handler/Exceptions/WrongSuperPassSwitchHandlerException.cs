@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.SwitchHandling.Handler.Exceptions
+﻿namespace Application.SwitchHandling.Handler.Exceptions
 {
-    internal class WrongSuperPassSwitchHandlerException
+    public class WrongSuperPassSwitchHandlerException : SwitchHandlerException
     {
+        public WrongSuperPassSwitchHandlerException() { }
+
+        public WrongSuperPassSwitchHandlerException(string message) : base(message) { }
+
+        public WrongSuperPassSwitchHandlerException(string message, Exception innerException) : base(message, innerException) { }
     }
 }
