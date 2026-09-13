@@ -1,6 +1,6 @@
-﻿namespace Application.Repository.Models
+﻿namespace Application.Repository.Models.Switch
 {
-    public class SwitchLookupDto
+    public class SwitchDto
     {
         public int Id { get; set; }
 
@@ -11,5 +11,11 @@
         public string Description { get; set; }
 
         public string Handler { get; set; }
+
+        public string Login { get; set; }
+
+        public string Password { get; set; }
+
+        public string SuperPassword { get; set; }
     }
 }

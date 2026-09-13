@@ -1,4 +1,4 @@
-﻿using Application.Repository.Models;
+﻿using Application.Repository.Models.Switch;
 using Infrastructure.Persistence.SQLite.Models;
 using Mapster;
 
@@ -14,7 +14,7 @@ namespace Infrastructure.Persistence.SQLite.MapsterConfiguration
                 .RequireDestinationMemberSource(true);
             config.NewConfig<GetSwitchesListDto, SwitchesListDto>()
                 .RequireDestinationMemberSource(true);
-            config.NewConfig<SwitchDbEntity, SwitchLookupDto>()
+            config.NewConfig<SwitchDbEntity, SwitchSummaryDto>()
                 .RequireDestinationMemberSource(true);
         }
     }

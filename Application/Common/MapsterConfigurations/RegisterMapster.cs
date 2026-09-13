@@ -1,4 +1,4 @@
-﻿using Application.Repository.Models;
+﻿using Application.Repository.Models.Switch;
 using Application.Switches.Commands.Add;
 using Application.Switches.Queries.GetSwitchesList;
 using Mapster;

@@ -1,6 +1,6 @@
 ﻿using Application.Repository.Exceptions;
 using Application.Repository.Interfaces;
-using Application.Repository.Models;
+using Application.Repository.Models.Switch;
 using Infrastructure.Persistence.SQLite.Models;
 using MapsterMapper;
 using Microsoft.Data.Sqlite;
@@ -91,6 +91,13 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             {
                 (string filter, object[] args) = GetFilterAndArgs();
 
+                //var query = _dbContext.Switches.Where(filter, args);
+                
+                /*
+                if (getDto.UserGropus is not null)
+                    query = query.Where(sw => );
+                */
+
                 int totalCount = _dbContext.Switches.Count(filter, args);
 
                 int maxPages = (totalCount / getDto.PageSize) + ((totalCount % getDto.PageSize) > 0 ? 1 : 0);
@@ -100,7 +107,7 @@ namespace Infrastructure.Persistence.SQLite.Implementations
                 var result = _mapper.Map<GetSwitchesListDto, SwitchesListDto>(getDto);
                 result.PageNumber = actualPageNumber;
                 result.TotalCount = totalCount;
-                result.Switches = _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchLookupDto>>(await _dbContext.Switches
+                result.Switches = _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchSummaryDto>>(await _dbContext.Switches
                     .Where(filter, args)
                     .OrderBy($"{getDto.SortField} {(getDto.SortAsc ? "ascending" : "descending")}")
                     .Skip((actualPageNumber - 1) * getDto.PageSize)

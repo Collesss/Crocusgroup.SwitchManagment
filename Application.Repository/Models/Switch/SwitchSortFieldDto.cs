@@ -1,4 +1,4 @@
-﻿namespace Application.Repository.Models
+﻿namespace Application.Repository.Models.Switch
 {
     public enum SwitchSortFieldDto
     {

@@ -1,7 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Interfaces;
 using Application.Repository.Interfaces;
-using Application.Repository.Models;
+using Application.Repository.Models.Switch;
 using Application.SwitchHandling.Handler.Models;
 using Application.SwitchHandling.Provider.Interfaces;
 using Mapster;

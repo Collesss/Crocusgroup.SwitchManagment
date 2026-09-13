@@ -1,10 +1,11 @@
-﻿using Application.Repository.Exceptions;
+﻿using Application.Repository.Models.ACE.Port;
+using Application.Repository.Models.ACE.Switch;
 using Application.Repository.Models.Common;
-using Application.Repository.Models.Switch;
+using Application.Repository.Exceptions;
 
-namespace Application.Repository.Interfaces
+namespace Application.Repository.Interfaces.ACE
 {
-    public interface ISwitchRepository
+    public interface ISwitchAceRepository
     {
         /// <summary>
         /// Get switch list.
@@ -15,9 +16,9 @@ namespace Application.Repository.Interfaces
         /// <exception cref="OperationCanceledException">Thrown if a cancellation was requested.</exception>
         /// <exception cref="ArgumentNullException">Throw if param "getDto" is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if param "getDto.PageSize" less than 1 or great than 100 or if param "getDto.PageNumber" less than 1 or if length next string params: 
-        /// getDto.Filter.SearchByIpOrName, getDto.Filter.SearchByLocation, getDto.Filter.SearchByDescription, getDto.Filter.SearchBtHandler; great than 100.</exception>
+        /// getDto.Filter.GroupId; great than 100.</exception>
         /// <returns>Switches list.</returns>
-        public Task<ListDto<SwitchSortFieldDto, GetSwitchesFilterDto, SwitchSummaryDto>> Get(GetListDto<SwitchSortFieldDto, GetSwitchesFilterDto> getDto, CancellationToken cancellationToken = default);
+        public Task<ListDto<SwitchAceSortFieldDto, GetSwitchesAcesFilterDto, SwitchAceDto>> Get(GetListDto<SwitchAceSortFieldDto, GetSwitchesAcesFilterDto> getDto, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get switch by id.
@@ -25,39 +26,38 @@ namespace Application.Repository.Interfaces
         /// <param name="id">Switch id.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <exception cref="RepositoryException">Throw if an unknown error occurs.</exception>
-        /// <exception cref="NotFoundRepositoryException">Thrown if switch not found.</exception>
+        /// <exception cref="NotFoundRepositoryException">Thrown if switch ace not found.</exception>
         /// <exception cref="OperationCanceledException">Thrown if a cancellation was requested.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if id is less than 1.</exception>
-        /// <returns>Switch.</returns>
-        public Task<SwitchDto> GetById(int id, CancellationToken cancellationToken = default);
+        /// <returns>Switch ace.</returns>
+        public Task<PortAceDto> GetById(int id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add switch.
         /// </summary>
-        /// <param name="switchAddDto">New switch.</param>
+        /// <param name="switchAceAddDto">New switch ace.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <exception cref="RepositoryException">Throw if an unknown error occurs.</exception>
-        /// <exception cref="ConfilictRepositoryException">Throw if switch with same value field "IpOrName" already exists.</exception>
+        /// <exception cref="ConfilictRepositoryException">Throw if switchAce with same value fields: SwitchId, GroupId; or Id already exists.</exception>
         /// <exception cref="OperationCanceledException">Thrown if a cancellation was requested.</exception>
-        /// <exception cref="ArgumentNullException">Throw if param switchAddDto or switchAddDto.IpOrName is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Throw if length next string params: switchAddDto.IpOrName, switchAddDto.Location, switchAddDto.Description, switchAddDto.Handler,
-        /// switchAddDto.Login, switchAddDto.Password, switchAddDto.SuperPassword; great than 100.</exception>
-        /// <returns>New switch id.</returns>
-        public Task<int> AddAsync(SwitchDto switchAddDto, CancellationToken cancellationToken = default);
+        /// <exception cref="ArgumentNullException">Throw if param switchAce.GroupId is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throw if length string param "switchAce.GroupId" great than 100.</exception>
+        /// <returns>New switch ace id.</returns>
+        public Task<int> AddAsync(SwitchAceDto switchAceAddDto, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update switch.
         /// </summary>
-        /// <param name="switchUpdateDto">Updating switch.</param>
+        /// <param name="switchAceUpdateDto">Updating switch.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <exception cref="RepositoryException">Throw if an unknown error occurs.</exception>
         /// <exception cref="ConfilictRepositoryException">Throw if switch with same value field "IpOrName" already exists.</exception>
         /// <exception cref="NotFoundRepositoryException">Thrown if switch not found.</exception>
         /// <exception cref="OperationCanceledException">Thrown if a cancellation was requested.</exception>
         /// <exception cref="ArgumentNullException">Throw if param switchUpdateDto is null.</exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throw if length string param "switchAce.GroupId" great than 100.</exception>
         /// <returns></returns>
-        public Task UpdateAsync(SwitchDto switchUpdateDto, CancellationToken cancellationToken = default);
+        public Task UpdateAsync(SwitchAceDto switchAceUpdateDto, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete switch.
@@ -65,7 +65,7 @@ namespace Application.Repository.Interfaces
         /// <param name="id">Switch id.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <exception cref="RepositoryException">Throw if an unknown error occurs.</exception>
-        /// <exception cref="NotFoundRepositoryException">Thrown if switch not found.</exception>
+        /// <exception cref="NotFoundRepositoryException">Thrown if switch ace not found.</exception>
         /// <exception cref="OperationCanceledException">Thrown if a cancellation was requested.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if id is less than 1.</exception>
         /// <returns></returns>

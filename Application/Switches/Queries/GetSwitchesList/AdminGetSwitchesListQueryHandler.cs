@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
 using Application.Repository.Interfaces;
-using Application.Repository.Models;
+using Application.Repository.Models.Switch;
 using MapsterMapper;
 using MediatR;
 
