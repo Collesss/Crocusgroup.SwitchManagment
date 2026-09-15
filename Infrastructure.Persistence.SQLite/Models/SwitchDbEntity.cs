@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Persistence.SQLite.Models
+﻿using Infrastructure.Persistence.SQLite.Models.ACE;
+
+namespace Infrastructure.Persistence.SQLite.Models
 {
     public class SwitchDbEntity
     {
@@ -17,5 +19,14 @@
         public string Password { get; set; }
 
         public string SuperPassword { get; set; }
+
+
+        public IEnumerable<SwitchAceDbEntity> SwitchACL { get; set; }
+
+        public IEnumerable<PortAceDbEntity> PortACL { get; set; }
+
+        public IEnumerable<VlanAceDbEntity> VlanACL { get; set; }
+
+        public IEnumerable<VlanOnPortDbEntity> VlanOnPortACL { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Application.Repository.Exceptions;
 using Application.Repository.Interfaces;
+using Application.Repository.Models.Common;
 using Application.Repository.Models.Switch;
 using Infrastructure.Persistence.SQLite.Models;
+using Infrastructure.Persistence.SQLite.Models.ACE.AccessMasks;
 using MapsterMapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -42,10 +44,11 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             }
         }
 
-        public async Task<SwitchesListDto> Get(GetSwitchesListDto getDto, CancellationToken cancellationToken = default)
+        public async Task<ListDto<SwitchSortFieldDto, GetSwitchesFilterDto, SwitchSummaryDto>> Get(GetListDto<SwitchSortFieldDto, GetSwitchesFilterDto> getDto, CancellationToken cancellationToken = default)
         {
             #region validation
             ArgumentNullException.ThrowIfNull(getDto);
+            ArgumentNullException.ThrowIfNull(getDto.Filter);
 
             if (getDto.PageSize < 1 || getDto.PageSize > 100)
                 throw new ArgumentOutOfRangeException(nameof(getDto.PageSize), getDto.PageSize, "Page size must be between 1 and 100 inclusive.");
@@ -91,23 +94,25 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             {
                 (string filter, object[] args) = GetFilterAndArgs();
 
-                //var query = _dbContext.Switches.Where(filter, args);
+                var query = _dbContext.Switches.Where(filter, args);
+
+                if (getDto.Filter.UserGropus is not null)
+                    query = query.Where(sw => sw.SwitchACL.Any(swACE => swACE.RightsMask.HasFlag(SwitchRights.SummaryView) && getDto.Filter.UserGropus.Contains(swACE.GroupId)));
                 
                 /*
-                if (getDto.UserGropus is not null)
-                    query = query.Where(sw => );
+                if (getDto.Filter.UserGropus != null)
+                    query = query.Where(@switch => getDto.Filter.UserGropus.Contains());
                 */
-
-                int totalCount = _dbContext.Switches.Count(filter, args);
+                int totalCount = query.Count();
 
                 int maxPages = (totalCount / getDto.PageSize) + ((totalCount % getDto.PageSize) > 0 ? 1 : 0);
 
                 int actualPageNumber = Math.Min(getDto.PageNumber, maxPages);
 
-                var result = _mapper.Map<GetSwitchesListDto, SwitchesListDto>(getDto);
+                var result = _mapper.Map<GetListDto<SwitchSortFieldDto, GetSwitchesFilterDto>, ListDto<SwitchSortFieldDto, GetSwitchesFilterDto, SwitchSummaryDto>>(getDto);
                 result.PageNumber = actualPageNumber;
                 result.TotalCount = totalCount;
-                result.Switches = _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchSummaryDto>>(await _dbContext.Switches
+                result.Entities = _mapper.Map<IEnumerable<SwitchDbEntity>, IEnumerable<SwitchSummaryDto>>(await _dbContext.Switches
                     .Where(filter, args)
                     .OrderBy($"{getDto.SortField} {(getDto.SortAsc ? "ascending" : "descending")}")
                     .Skip((actualPageNumber - 1) * getDto.PageSize)
@@ -234,5 +239,6 @@ namespace Infrastructure.Persistence.SQLite.Implementations
                 throw new RepositoryException("Unknow error, see innerException.", e);
             }
         }
+
     }
 }
