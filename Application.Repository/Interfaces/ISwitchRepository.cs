@@ -13,7 +13,7 @@ namespace Application.Repository.Interfaces
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <exception cref="RepositoryException">Throw if an unknown error occurs.</exception>
         /// <exception cref="OperationCanceledException">Thrown if a cancellation was requested.</exception>
-        /// <exception cref="ArgumentNullException">Throw if param "getDto" is null.</exception>
+        /// <exception cref="ArgumentNullException">Throw if param "getDto" or "getDto.Filter" is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if param "getDto.PageSize" less than 1 or great than 100 or if param "getDto.PageNumber" less than 1 or if length next string params: 
         /// getDto.Filter.SearchByIpOrName, getDto.Filter.SearchByLocation, getDto.Filter.SearchByDescription, getDto.Filter.SearchBtHandler; great than 100.</exception>
         /// <returns>Switches list.</returns>

@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
-using Application.Repository.Interfaces;
-using Application.Repository.Models.Switch;
+using Application.DbContext;
+using Application.DbContext.Models;
 using MapsterMapper;
 using MediatR;
 
@@ -8,12 +8,12 @@ namespace Application.Switches.Commands.Add
 {
     public class AdminAddSwitchCommandHandler : IRequestHandler<AdminAddSwitchCommand, int>
     {
-        private readonly ISwitchRepository _switchRepository;
+        private readonly ISwitchManagmentDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public AdminAddSwitchCommandHandler(ISwitchRepository switchRepository, IMapper mapper) 
+        public AdminAddSwitchCommandHandler(ISwitchManagmentDbContext dbContext, IMapper mapper) 
         {
-            _switchRepository = switchRepository ?? throw new ArgumentNullException(nameof(switchRepository));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -21,7 +21,15 @@ namespace Application.Switches.Commands.Add
         {
             try
             {
-                return await _switchRepository.AddAsync(_mapper.Map<AdminAddSwitchCommand, SwitchDto>(request), cancellationToken);
+                var trak = await _dbContext.Switches.AddAsync(_mapper.Map<AdminAddSwitchCommand, SwitchEntity>(request), cancellationToken);
+
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                return trak.Entity.Id;
+            }
+            catch(OperationCanceledException)
+            {
+                throw;
             }
             catch(AppException)
             {

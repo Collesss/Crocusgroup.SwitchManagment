@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Persistence.SQLite.Models.ACE.AccessMasks
+﻿namespace Application.DbContext.Models.ACE.Switch
 {
     [Flags]
     public enum SwitchRights

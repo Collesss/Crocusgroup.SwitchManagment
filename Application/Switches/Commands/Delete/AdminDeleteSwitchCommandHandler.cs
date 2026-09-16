@@ -1,23 +1,33 @@
 ﻿using Application.Common.Exceptions;
-using Application.Repository.Interfaces;
+using Application.DbContext;
+using Application.DbContext.Models;
+using MapsterMapper;
 using MediatR;
 
 namespace Application.Switches.Commands.Delete
 {
     public class AdminDeleteSwitchCommandHandler : IRequestHandler<AdminDeleteSwitchCommand>
     {
-        private readonly ISwitchRepository _switchRepository;
+        private readonly ISwitchManagmentDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public AdminDeleteSwitchCommandHandler(ISwitchRepository switchRepository)
+        public AdminDeleteSwitchCommandHandler(ISwitchManagmentDbContext dbContext, IMapper mapper)
         {
-            _switchRepository = switchRepository ?? throw new ArgumentNullException(nameof(switchRepository));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task Handle(AdminDeleteSwitchCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                await _switchRepository.DeleteAsync(request.Id, cancellationToken);
+                _dbContext.Switches.Remove(_mapper.Map<AdminDeleteSwitchCommand, SwitchEntity>(request));
+
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch(OperationCanceledException)
+            {
+                throw;
             }
             catch(AppException)
             {

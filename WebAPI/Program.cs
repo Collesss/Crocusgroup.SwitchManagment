@@ -1,3 +1,4 @@
+using Application.Interfaces;
 using Application.Repository.Interfaces;
 using Infrastructure.Persistence.SQLite;
 using Infrastructure.Persistence.SQLite.Implementations;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using WebAPI.Services;
 
 namespace WebAPI
 {
@@ -31,7 +33,7 @@ namespace WebAPI
                 opts.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection")));
 
             builder.Services.AddScoped<ISwitchRepository, SwitchRepository>();
-
+            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

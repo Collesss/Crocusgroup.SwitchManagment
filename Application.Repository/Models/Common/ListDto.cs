@@ -8,7 +8,7 @@
     /// <typeparam name="R">Result class.</typeparam>
     public class ListDto<S, F, R> : GetListDto<S, F>
         where S : Enum 
-        where F : class
+        where F : class, new()
         where R : class
     {
         public int TotalCount { get; set; }

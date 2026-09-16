@@ -3,7 +3,7 @@
     [Flags]
     public enum VlanRigthsDto
     {
-        Listing,
-        View
+        Listing = 0b0000_0001,
+        View    = 0b0000_0010
     }
 }

@@ -7,9 +7,9 @@
     /// <typeparam name="F">Filter class.</typeparam>
     public class GetListDto<S, F>
         where S : Enum
-        where F : class
+        where F : class, new()
     {
-        public F Filter { get; set; }
+        public F Filter { get; set; } = new F();
 
         public S SortField { get; set; }
 

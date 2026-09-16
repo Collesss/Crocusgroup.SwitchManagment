@@ -1,12 +1,12 @@
-﻿using Infrastructure.Persistence.SQLite.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Application.DbContext.Models;
 
-namespace Infrastructure.Persistence.SQLite.ModelsConfigurations
+namespace Infrastructure.Persistence.ModelsConfigurations
 {
-    public class SwitchDbEntityConfiguration : IEntityTypeConfiguration<SwitchDbEntity>
+    public class SwitchDbEntityConfiguration : IEntityTypeConfiguration<SwitchEntity>
     {
-        public void Configure(EntityTypeBuilder<SwitchDbEntity> builder)
+        public void Configure(EntityTypeBuilder<SwitchEntity> builder)
         {
             builder.HasKey(@switch => @switch.Id);
 
@@ -35,6 +35,7 @@ namespace Infrastructure.Persistence.SQLite.ModelsConfigurations
             builder.Property(@switch => @switch.SuperPassword)
                 .HasMaxLength(100);
 
+            /*
             builder.HasMany(@switch => @switch.SwitchACL)
                 .WithOne(switchACE => switchACE.Switch)
                 .HasPrincipalKey(@switch => @switch.Id)
@@ -62,6 +63,7 @@ namespace Infrastructure.Persistence.SQLite.ModelsConfigurations
                 .HasForeignKey(vlanOnPortACE => vlanOnPortACE.SwitchId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+            */
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Application.Interfaces
 {
-    public class ICurrentUserService
+    public interface ICurrentUserService
     {
         public IEnumerable<string> GroupsId { get; }
     }

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Persistence.SQLite.Models.ACE.AccessMasks
+﻿namespace Application.DbContext.Models.ACE.VlanOnPort
 {
     [Flags]
     public enum VlanOnPortRigths

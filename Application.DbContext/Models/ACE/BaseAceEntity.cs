@@ -1,12 +1,12 @@
-﻿namespace Infrastructure.Persistence.SQLite.Models.ACE
+﻿namespace Application.DbContext.Models.ACE
 {
-    public class BaseAceDbEntity<T> where T : Enum
+    public class BaseAceEntity<T> where T : Enum
     {
         public int Id { get; set; }
 
         public int SwitchId { get; set; }
 
-        public SwitchDbEntity Switch {  get; set; }
+        public SwitchEntity Switch {  get; set; }
 
         public string GroupId { get; set; }
 
