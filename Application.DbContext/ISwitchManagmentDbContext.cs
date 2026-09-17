@@ -3,7 +3,7 @@ using Application.DbContext.Models.ACE.Port;
 using Application.DbContext.Models.ACE.Switch;
 using Application.DbContext.Models.ACE.Vlan;
 using Application.DbContext.Models.ACE.VlanOnPort;
-using Application.Common.Exceptions;
+using Application.DbContext.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.DbContext
@@ -24,7 +24,7 @@ namespace Application.DbContext
         /// 
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="AppException"></exception>
+        /// <exception cref="DbContextException"></exception>
         /// <returns></returns>
         public abstract Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
