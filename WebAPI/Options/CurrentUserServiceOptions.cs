@@ -1,9 +1,14 @@
 ﻿namespace WebAPI.Options
 {
-    public class CurrentUserServiceOptions
+    public class CurrentUserServiceOptions : List<CurrentUserServiceOptions.Role>
     {
-        public string AdminGroupId { get; set; }
+        public class Role
+        {
+            public string RoleName { get; set; }
 
-        public string OperatorGroupId { get; set; }
+            public string[] GroupsSIDs {  get; set; }
+
+            public string[] Permissions { get; set; }
+        }
     }
 }
