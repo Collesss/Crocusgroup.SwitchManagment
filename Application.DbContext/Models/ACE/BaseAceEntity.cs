@@ -1,8 +1,7 @@
 ﻿namespace Application.DbContext.Models.ACE
 {
-    public class BaseAceEntity<T> where T : Enum
+    public class BaseAceEntity<T> : BaseEntity where T : Enum
     {
-        public int Id { get; set; }
 
         public int SwitchId { get; set; }
 

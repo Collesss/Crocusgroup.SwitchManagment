@@ -11,7 +11,7 @@ namespace Application.UnitTests.Switches.Queries
         public async Task AdminGetSwitchDetailQuery_GetExistSwitch_ReturnSwitchWithId1()
         {
             //Arrange
-            var getSwitch = new AdminGetSwitchDetailQuery 
+            var getSwitch = new GetSwitchDetailQuery 
             {
                 Id = 1 
             };
@@ -29,7 +29,7 @@ namespace Application.UnitTests.Switches.Queries
         public async Task AdminGetSwitchDetailQuery_GetNotExistSwitch_ThrownApplicationLaerException()
         {
             //Arrange
-            var getSwitch = new AdminGetSwitchDetailQuery
+            var getSwitch = new GetSwitchDetailQuery
             {
                 Id = 100000
             };

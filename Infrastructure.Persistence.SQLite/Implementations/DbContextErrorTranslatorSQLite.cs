@@ -15,5 +15,14 @@ namespace Infrastructure.Persistence.SQLite.Implementations
                 _ => throw new AppException("Unknow error.", exception)
             };
         }
+
+        DbContextException IDbContextErrorTranslator.Translate(Exception exception)
+        {
+            return exception switch
+            {
+                DbUpdateException e => new NotFoundDbContextException("", exception),
+                _ => throw new AppException("Unknow error.", exception)
+            };
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Application.UnitTests.Switches.Queries
         public async Task AdminGetSwitchesListQuery()
         {
             //Arrange
-            var query = new AdminGetSwitchesListQuery
+            var query = new GetSwitchesListQuery
             {
                 SearchByIpOrName = "1",
                 SortField = SwitchSortField.Id,

@@ -1,9 +1,9 @@
-﻿using MediatR;
-
-namespace Application.Switches.Commands.Add
+﻿namespace Application.Switches.Queries.GetSwitchDetail
 {
-    public class AdminAddSwitchCommand : IRequest<int>
+    public class SwitchDetailVm
     {
+        public int Id { get; set; }
+
         public string IpOrName { get; set; }
 
         public string Location { get; set; }

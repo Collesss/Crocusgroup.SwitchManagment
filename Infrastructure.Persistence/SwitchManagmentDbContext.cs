@@ -30,7 +30,7 @@ namespace Infrastructure.Persistence
         public SwitchManagmentDbContext(DbContextOptions<SwitchManagmentDbContext> options, IDbContextErrorTranslator errorTranslator) : base(options)
         {
             _errorTranslator = errorTranslator ?? throw new ArgumentNullException(nameof(errorTranslator));
-
+            
             Database.EnsureCreated();
         }
 

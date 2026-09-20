@@ -11,7 +11,7 @@ namespace Application.UnitTests.Switches.Commans
         public async Task AdminDeleteSwitchCommand_DeleteExistSwitch_ExecutionWithoutErrors()
         {
             //Arrange
-            var deletingSwitch = new AdminDeleteSwitchCommand
+            var deletingSwitch = new DeleteSwitchCommand
             {
                 Id = 1
             };
@@ -27,7 +27,7 @@ namespace Application.UnitTests.Switches.Commans
         public async Task AdminDeleteSwitchCommand_DeleteNotExistSwitch_ThrownApplicationLaerException()
         {
             //Arrange
-            var deletingSwitch = new AdminDeleteSwitchCommand
+            var deletingSwitch = new DeleteSwitchCommand
             {
                 Id = 10000
             };

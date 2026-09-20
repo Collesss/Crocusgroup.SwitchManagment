@@ -9,11 +9,11 @@ namespace Application.Common.MapsterConfigurations
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<AdminAddSwitchCommand, SwitchDto>();
-            config.NewConfig<AdminGetSwitchesListQuery, GetSwitchesListDto>();
+            config.NewConfig<AddSwitchCommand, SwitchDto>();
+            config.NewConfig<GetSwitchesListQuery, GetSwitchesListDto>();
             config.NewConfig<SwitchSortField, SwitchSortFieldDto>();
             config.NewConfig<SwitchSortFieldDto, SwitchSortField>();
-            config.NewConfig<SwitchesListDto, AdminSwitchesListVm>();
+            config.NewConfig<SwitchesListDto, SwitchesListResponse>();
         }
     }
 }

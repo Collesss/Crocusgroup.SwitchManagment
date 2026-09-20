@@ -31,11 +31,11 @@ namespace WebAPI.Controllers
         */
 
         [HttpGet("{id}/admin")]
-        public async Task<ActionResult<AdminSwitchDetailVm>> Get(int id)
+        public async Task<ActionResult<SwitchDetailVm>> Get(int id)
         {
             try
             {
-                return Ok(await _mediator.Send(new AdminGetSwitchDetailQuery { Id = id }));
+                return Ok(await _mediator.Send(new GetSwitchDetailQuery { Id = id }));
             }
             catch(NotFoundAppException e)
             {
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] AdminAddSwitchCommand addSwitch) =>
+        public async Task<ActionResult<int>> Post([FromBody] AddSwitchCommand addSwitch) =>
             Ok(await _mediator.Send(addSwitch));
 
 

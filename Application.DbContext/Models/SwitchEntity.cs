@@ -5,10 +5,8 @@ using Application.DbContext.Models.ACE.VlanOnPort;
 
 namespace Application.DbContext.Models
 {
-    public class SwitchEntity
+    public class SwitchEntity : BaseEntity
     {
-        public int Id { get; set; }
-
         public string IpOrName { get; set; }
 
         public string Location { get; set; }

@@ -11,7 +11,7 @@ namespace Application.UnitTests.Switches.Commans
         public async Task AdminAddSwitchCommand_AddSwitch_ReturnId101()
         {
             //Arrange
-            var addingSwitch = new AdminAddSwitchCommand
+            var addingSwitch = new AddSwitchCommand
             {
                 IpOrName = "Host11",
                 Location = "Location11",
@@ -37,7 +37,7 @@ namespace Application.UnitTests.Switches.Commans
         public async Task AdminAddSwitchCommand_AddExistSwitch_ThrownApplicationLayerException()
         {
             //Arrange
-            var addingExistSwitch = new AdminAddSwitchCommand
+            var addingExistSwitch = new AddSwitchCommand
             {
                 IpOrName = "Host1",
                 Location = "Location1",
