@@ -1,10 +1,7 @@
-using Application.Interfaces;
-using Application.Repository.Interfaces;
-using Infrastructure.Persistence.SQLite;
-using Infrastructure.Persistence.SQLite.Implementations;
+using Application.CurrentUserService.Interfaces;
+using Application.DbContext;
+using Infrastructure.Persistence;
 using Mapster;
-using Microsoft.AspNetCore.Authentication.Negotiate;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using WebAPI.Services;
@@ -29,10 +26,11 @@ namespace WebAPI
                 cfg.RegisterServicesFromAssembly(Assembly.Load("Application")));
 
 
-            builder.Services.AddDbContext<SQLiteDbContext>(opts =>
+            builder.Services.AddDbContext<SwitchManagmentDbContext>(opts =>
                 opts.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection")));
 
-            builder.Services.AddScoped<ISwitchRepository, SwitchRepository>();
+            builder.Services.AddScoped<ISwitchManagmentDbContext>(provider => provider.GetRequiredService<SwitchManagmentDbContext>());
+
             builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             builder.Services.AddControllers();

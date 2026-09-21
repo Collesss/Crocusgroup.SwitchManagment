@@ -3,9 +3,7 @@ using Application.Switches.Commands.Add;
 using Application.Switches.Queries.GetSwitchDetail;
 using MapsterMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models.Dto.Response;
 
 namespace WebAPI.Controllers
 {
@@ -31,13 +29,13 @@ namespace WebAPI.Controllers
         */
 
         [HttpGet("{id}/admin")]
-        public async Task<ActionResult<SwitchDetailVm>> Get(int id)
+        public async Task<ActionResult<SwitchDetailResponse>> Get(int id)
         {
             try
             {
                 return Ok(await _mediator.Send(new GetSwitchDetailQuery { Id = id }));
             }
-            catch(NotFoundAppException e)
+            catch(NotFoundAppException)
             {
                 return Problem(detail: "Switch with this 'id' not exist.", statusCode: StatusCodes.Status404NotFound);
             }

@@ -1,6 +1,6 @@
 ﻿namespace Application.Switches.Queries.GetSwitchDetail
 {
-    public class SwitchDetailVm
+    public class SwitchDetailResponse
     {
         public int Id { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace Application.Switches.Queries.GetSwitchDetail
 {
-    public class GetSwitchDetailQuery : IRequest<SwitchDetailVm>
+    public class GetSwitchDetailQuery : IRequest<SwitchDetailResponse>
     {
         public int Id { get; set; }
     }

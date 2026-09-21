@@ -20,7 +20,7 @@ namespace Application.DbContext
 
         public DbSet<VlanOnPortAceEntity> VlanOnPortACL { get; set; }
 
-        public DbSet<TEntity> Set<TEntity>() where TEntity : class;
+        public DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity;
 
         /// <summary>
         /// 

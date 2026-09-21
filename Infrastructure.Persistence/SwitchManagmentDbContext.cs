@@ -53,6 +53,9 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new VlanOnPortAceDbEntityConfiguration());
         }
 
+        DbSet<TEntity> ISwitchManagmentDbContext.Set<TEntity>() =>
+            base.Set<TEntity>();
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             try

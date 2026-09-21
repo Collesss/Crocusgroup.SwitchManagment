@@ -7,7 +7,7 @@ using Application.CurrentUserService.Security;
 namespace Application.Switches.Queries.GetSwitchDetail
 {
     [RequirePermission(Permissions.Switch.View)]
-    public class GetSwitchDetailQueryHandler : IRequestHandler<GetSwitchDetailQuery, SwitchDetailVm>
+    public class GetSwitchDetailQueryHandler : IRequestHandler<GetSwitchDetailQuery, SwitchDetailResponse>
     {
         private readonly ISwitchManagmentDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -18,8 +18,8 @@ namespace Application.Switches.Queries.GetSwitchDetail
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<SwitchDetailVm> Handle(GetSwitchDetailQuery request, CancellationToken cancellationToken) =>
-            _mapper.Map<SwitchDetailVm>(await _dbContext.Switches.FindAsync([request.Id], cancellationToken: cancellationToken) ?? 
+        public async Task<SwitchDetailResponse> Handle(GetSwitchDetailQuery request, CancellationToken cancellationToken) =>
+            _mapper.Map<SwitchDetailResponse>(await _dbContext.Switches.FindAsync([request.Id], cancellationToken: cancellationToken) ?? 
                 throw new NotFoundAppException("Switch with this Id not found."));
     }
 }

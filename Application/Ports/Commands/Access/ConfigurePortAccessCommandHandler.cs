@@ -1,17 +1,7 @@
-﻿using Application.Common.Exceptions;
-using Application.Interfaces;
-using Application.Repository.Interfaces;
-using Application.Repository.Models.Switch;
-using Application.SwitchHandling.Handler.Models;
-using Application.SwitchHandling.Provider.Interfaces;
-using Mapster;
-using MapsterMapper;
-using MediatR;
-
-namespace Application.Ports.Commands.Access
+﻿namespace Application.Ports.Commands.Access
 {
-    public class ConfigurePortAccessCommandHandler : IRequestHandler<ConfigurePortAccessCommand>
-    {
+    public class ConfigurePortAccessCommandHandler //: IRequestHandler<ConfigurePortAccessCommand>
+    {/*
         private readonly ISwitchRepository _switchRepository;
         private readonly ISwitchHandlerProvider _switchHandlerProvider;
         private readonly ICurrentUserService _curentUserService;
@@ -46,5 +36,6 @@ namespace Application.Ports.Commands.Access
                 throw new AppException("An unknown error occurred while setting the port as access, see InnerException.", e);
             }
         }
+        */
     }
 }
