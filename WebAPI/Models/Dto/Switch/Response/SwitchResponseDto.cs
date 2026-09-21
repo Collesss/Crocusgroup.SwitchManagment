@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models.Dto.Response
+﻿namespace WebAPI.Models.Dto.Switch.Response
 {
     public class SwitchResponseDto
     {
@@ -11,5 +11,9 @@
         public string Description { get; set; }
 
         public string Handler { get; set; }
+
+        public string Login {  get; set; }
+
+        public string Password { get; set; }
     }
 }
