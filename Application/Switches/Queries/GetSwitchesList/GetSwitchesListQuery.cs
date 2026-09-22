@@ -1,4 +1,4 @@
-﻿using Application.Common.Query;
+﻿using Application.Common.Query.List;
 using MediatR;
 
 namespace Application.Switches.Queries.GetSwitchesList

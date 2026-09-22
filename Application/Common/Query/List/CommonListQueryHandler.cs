@@ -6,9 +6,9 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 
-namespace Application.Common.Query
+namespace Application.Common.Query.List
 {
-    public class CommonListQueryHandler<TQuery, TResponse, TResponseLookupDto, TSortField, TFilter, TContextEntity> : IRequestHandler<TQuery, TResponse>
+    public abstract class CommonListQueryHandler<TQuery, TResponse, TResponseLookupDto, TSortField, TFilter, TContextEntity> : IRequestHandler<TQuery, TResponse>
         where TQuery : CommonListQuery<TFilter, TSortField>, IRequest<TResponse>
         where TResponse : CommonListResponse<TResponseLookupDto, TFilter, TSortField>
         where TResponseLookupDto : class
@@ -33,7 +33,7 @@ namespace Application.Common.Query
 
             int totalCount = query.Count();
 
-            int maxPage = (totalCount / request.PageSize) + ((totalCount % request.PageSize) > 0 ? 1 : 0);
+            int maxPage = totalCount / request.PageSize + (totalCount % request.PageSize > 0 ? 1 : 0);
 
             int actualPageNumber = Math.Min(request.PageNumber, maxPage);
 

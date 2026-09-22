@@ -1,4 +1,4 @@
-﻿namespace Application.ACL.Switches.Commands.Common
+﻿namespace Application.ACL.Switches.Common
 {
     [Flags]
     public enum SwitchRightsMask

@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Query
+﻿namespace Application.Common.Query.List
 {
     public abstract class CommonListResponse<TEntity, TFilter, TSortField> : CommonListQuery<TFilter, TSortField>
         where TEntity : class

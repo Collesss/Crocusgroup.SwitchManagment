@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Application.SwitchHandling.Provider\Application.SwitchHandling.Provider.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ACL\Ports\" />
+  </ItemGroup>
+
 </Project>

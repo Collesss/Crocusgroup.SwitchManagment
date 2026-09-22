@@ -1,9 +1,12 @@
-﻿using MediatR;
+﻿using Application.Common.Query.Detail;
+using MediatR;
 
 namespace Application.Switches.Queries.GetSwitchDetail
 {
-    public class GetSwitchDetailQuery : IRequest<SwitchDetailResponse>
+    /// <summary>
+    /// Query for get switch by Id.
+    /// </summary>
+    public class GetSwitchDetailQuery : CommonDetailQuery, IRequest<SwitchDetailResponse>
     {
-        public int Id { get; set; }
     }
 }

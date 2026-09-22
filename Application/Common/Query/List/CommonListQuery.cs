@@ -1,5 +1,10 @@
-﻿namespace Application.Common.Query
+﻿namespace Application.Common.Query.List
 {
+    /// <summary>
+    /// Query common for get list entities.
+    /// </summary>
+    /// <typeparam name="TFilter">Type filter.</typeparam>
+    /// <typeparam name="TSortField">Enum contains fields for sort.</typeparam>
     public abstract class CommonListQuery<TFilter, TSortField>
         where TFilter : class, new()
         where TSortField : Enum

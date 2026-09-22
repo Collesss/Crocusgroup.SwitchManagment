@@ -1,4 +1,4 @@
-﻿using Application.Common.Query;
+﻿using Application.Common.Query.List;
 
 namespace Application.Switches.Queries.GetSwitchesList
 {

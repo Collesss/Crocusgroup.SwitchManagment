@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces;
-using Application.Common.Query;
+using Application.Common.Query.List;
 using Application.DbContext;
 using Application.DbContext.Models;
 using MapsterMapper;
