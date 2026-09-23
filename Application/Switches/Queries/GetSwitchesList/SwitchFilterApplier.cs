@@ -23,16 +23,18 @@ namespace Application.Switches.Queries.GetSwitchesList
             
             var notNullAndEmptySearchProps = filter.GetType().GetProperties()
                     .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(filter) is string str && !string.IsNullOrEmpty(str));
+
             string filterStr = string.Join(" AND ", notNullAndEmptySearchProps
                 .Select((prop, i) => $"{prop.Name.Replace("SearchBy", string.Empty)}.Contains(@{i})"));
+
             object[] args = notNullAndEmptySearchProps.Select(prop => prop.GetValue(filter)).ToArray();
 
-            var query = entities.Where(filterStr, args);
+            entities = entities.Where(filterStr, args);
 
             if (!_currentUserService.HasPermission(Permissions.Switch.AclBypass))
-                query = query.Where(@switch => @switch.SwitchACL.Any(switchAce => switchAce.RightsMask.HasFlag(SwitchRights.SummaryView) && _currentUserService.GroupsIds.Contains(switchAce.GroupId)));
+                entities = entities.Where(@switch => @switch.SwitchACL.Any(switchAce => switchAce.RightsMask.HasFlag(SwitchRights.SummaryView) && _currentUserService.GroupsIds.Contains(switchAce.GroupId)));
 
-            return query;
+            return entities;
         }
     }
 }

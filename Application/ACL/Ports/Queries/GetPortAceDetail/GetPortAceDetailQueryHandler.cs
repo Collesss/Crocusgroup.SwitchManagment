@@ -4,9 +4,9 @@ using Application.DbContext;
 using Application.DbContext.Models.ACE.Switch;
 using MapsterMapper;
 
-namespace Application.ACL.Switches.Queries.GetSwitchAceDetail
+namespace Application.ACL.Ports.Queries.GetPortAceDetail
 {
-    [RequirePermission(Permissions.ACL.Switch.View)]
+    [RequirePermission(Permissions.ACL.Port.View)]
     public class GetPortAceDetailQueryHandler(ISwitchManagmentDbContext dbContext, IMapper mapper) : 
         CommonDetailQueryHandler<GetPortAceDetailQuery, PortAceDetailResponse, SwitchAceEntity>(dbContext, mapper)
     {

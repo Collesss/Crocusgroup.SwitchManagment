@@ -6,8 +6,8 @@ using MapsterMapper;
 
 namespace Application.ACL.Switches.Queries.GetSwitchAcesList
 {
-    public class GetSwitchAcesListQueryHandler(ISwitchManagmentDbContext dbContext, IMapper mapper, IFilterApplier<SwitchAceFilter, SwitchAceEntity> filterApplier) : 
-        CommonListQueryHandler<GetSwitchAcesListQuery, SwitchAcesListResponse, SwitchAceLookupDto, SwitchAceSortField, SwitchAceFilter, SwitchAceEntity>(dbContext, mapper, filterApplier)
+    public class GetPortAcesListQueryHandler(ISwitchManagmentDbContext dbContext, IMapper mapper, IFilterApplier<SwitchAceFilter, SwitchAceEntity> filterApplier) : 
+        CommonListQueryHandler<GetPortAcesListQuery, PortAcesListResponse, PortAceLookupDto, SwitchAceSortField, SwitchAceFilter, SwitchAceEntity>(dbContext, mapper, filterApplier)
     {
     }
 }

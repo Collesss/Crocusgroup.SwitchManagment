@@ -1,16 +1,15 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.ACL.Common;
 using Application.DbContext.Models.ACE.Switch;
 
 namespace Application.ACL.Switches.Queries.GetSwitchAcesList
 {
-    public class SwitchAceFilterApplier : IFilterApplier<SwitchAceFilter, SwitchAceEntity>
+    public class PortAceFilterApplier : CommonAceFilterApplier<SwitchAceFilter, SwitchAceEntity, SwitchRights>
     {
-        public IQueryable<SwitchAceEntity> ApplyFilter(SwitchAceFilter filter, IQueryable<SwitchAceEntity> entities)
+        public override IQueryable<SwitchAceEntity> ApplyFilter(SwitchAceFilter filter, IQueryable<SwitchAceEntity> entities)
         {
-            if (filter.SwitchId is not null)
-                entities = entities.Where(switchAce => switchAce.Id == filter.SwitchId);
+            var query = base.ApplyFilter(filter, entities);
 
-            return entities;
+            return query;
         }
     }
 }

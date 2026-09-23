@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ACL\Ports\" />
+    <Folder Include="ACL\Vlans\Queries\" />
   </ItemGroup>
 
 </Project>

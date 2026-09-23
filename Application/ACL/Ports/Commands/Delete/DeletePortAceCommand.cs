@@ -1,14 +1,14 @@
 ﻿using MediatR;
 
-namespace Application.ACL.Switches.Commands.Delete
+namespace Application.ACL.Ports.Commands.Delete
 {
     /// <summary>
-    /// Command for delete switch ace.
+    /// Command for delete port ace.
     /// </summary>
     public class DeletePortAceCommand : IRequest
     {
         /// <summary>
-        /// Id deleting switch ace, cant be less 1.
+        /// Id deleting port ace, cant be less 1.
         /// </summary>
         public int Id { get; set; }
     }

@@ -1,14 +1,14 @@
 ﻿using Application.Common.Commands;
 using Application.CurrentUserService.Security;
 using Application.DbContext;
-using Application.DbContext.Models.ACE.Switch;
+using Application.DbContext.Models.ACE.Port;
 using MapsterMapper;
 
-namespace Application.ACL.Switches.Commands.Delete
+namespace Application.ACL.Ports.Commands.Delete
 {
-    [RequirePermission(Permissions.ACL.Switch.Delete)]
+    [RequirePermission(Permissions.ACL.Port.Delete)]
     public class DeletePortAceCommandHandler(ISwitchManagmentDbContext dbContext, IMapper mapper) 
-        : CommonDeleteCommandHandler<DeletePortAceCommand, SwitchAceEntity>(dbContext, mapper)
+        : CommonDeleteCommandHandler<DeletePortAceCommand, PortAceEntity>(dbContext, mapper)
     {
     }
 }

@@ -33,6 +33,31 @@ namespace Application.CurrentUserService.Security
                 public const string Delete  = "acl.switch.delete";
                 public const string Update  = "acl.switch.update";
             }
+            public static class Port
+            {
+                public const string List = "acl.port.list";
+                public const string View = "acl.port.view";
+                public const string Add = "acl.port.add";
+                public const string Delete = "acl.port.delete";
+                public const string Update = "acl.port.update";
+            }
+
+            public static class Vlan
+            {
+                public const string List = "acl.vlan.list";
+                public const string View = "acl.vlan.view";
+                public const string Add = "acl.vlan.add";
+                public const string Delete = "acl.vlan.delete";
+                public const string Update = "acl.vlan.update";
+            }
+            public static class VlanOnPort
+            {
+                public const string List = "acl.vlanOnPort.list";
+                public const string View = "acl.vlanOnPort.view";
+                public const string Add = "acl.vlanOnPort.add";
+                public const string Delete = "acl.vlanOnPort.delete";
+                public const string Update = "acl.vlanOnPort.update";
+            }
         }
 
         private static IEnumerable<string> GetAllDefinedPermissions(Type type) =>
