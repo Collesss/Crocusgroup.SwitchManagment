@@ -3,7 +3,7 @@
     [Flags]
     public enum VlanRigths
     {
-        Listing = 0b0000_0001,
+        None    = 0b0000_0000,
         View    = 0b0000_0010
     }
 }

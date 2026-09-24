@@ -1,4 +1,6 @@
-﻿namespace Application.Switches.Queries.GetSwitchDetail
+﻿using Application.Switches.Queries.GetSwitchDetail.Port;
+
+namespace Application.Switches.Queries.GetSwitchDetail
 {
     public class SwitchDetailResponse
     {
@@ -17,5 +19,9 @@
         public string Password { get; set; }
 
         public string SuperPassword { get; set; }
+
+        public IEnumerable<PortDto> Ports { get; set; }
+
+        public IEnumerable<VlanDto> Vlans { get; set; }
     }
 }

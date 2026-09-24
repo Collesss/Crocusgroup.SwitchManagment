@@ -11,5 +11,7 @@
         public string Description { get; set; }
 
         public string Handler { get; set; }
+
+        public bool CanDeatailView { get; set; }
     }
 }
