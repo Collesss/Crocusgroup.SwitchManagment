@@ -19,9 +19,9 @@ namespace Infrastructure.SwitchHandling.Provider.DI.Implementations
             try
             {
                 return _serviceProvider.GetKeyedService<ISwitchHandler>(handlerName) ??
-                    throw new NotFoundHandlerProviderException("Handler with this name not found.");
+                    throw new UndefinedHandlerException("Handler with this name not found.");
             }
-            catch(NotFoundHandlerProviderException)
+            catch(UndefinedHandlerException)
             {
                 throw;
             }

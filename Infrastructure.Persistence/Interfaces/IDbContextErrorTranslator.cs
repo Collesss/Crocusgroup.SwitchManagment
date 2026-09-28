@@ -1,4 +1,4 @@
-﻿using Application.DbContext.Exceptions;
+﻿using Application.Common.Exceptions;
 
 namespace Infrastructure.Persistence.Interfaces
 {
@@ -8,6 +8,6 @@ namespace Infrastructure.Persistence.Interfaces
         /// Handler DbContext errors.
         /// </summary>
         /// <param name="exception">Db exception.</param>
-        public DbContextException Translate(Exception exception);
+        public AppException Translate(Exception exception);
     }
 }

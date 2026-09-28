@@ -7,5 +7,9 @@
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public bool CanConfigureAsAccess { get; set; }
+
+        public bool CanConfigureAsTrunk { get; set; }
     }
 }

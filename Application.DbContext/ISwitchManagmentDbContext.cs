@@ -18,16 +18,16 @@ namespace Application.DbContext
 
         public DbSet<VlanAceEntity> VlansACL { get; set; }
 
-        public DbSet<VlanOnPortAceEntity> VlanOnPortACL { get; set; }
+        //public DbSet<VlanOnPortAceEntity> VlanOnPortACL { get; set; }
 
         public DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity;
 
         /// <summary>
-        /// 
+        /// Save changes.
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="DbContextException"></exception>
-        /// <returns></returns>
+        /// <exception cref="ConflictAppException"></exception>
+        /// <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database</returns>
         public abstract Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

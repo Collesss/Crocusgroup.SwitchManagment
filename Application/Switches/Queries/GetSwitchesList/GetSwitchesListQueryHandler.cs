@@ -1,11 +1,13 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Query.List;
+using Application.CurrentUserService.Security;
 using Application.DbContext;
 using Application.DbContext.Models;
 using MapsterMapper;
 
 namespace Application.Switches.Queries.GetSwitchesList
 {
+    [RequirePermission(Permissions.Switch.List)]
     public class GetSwitchesListQueryHandler(ISwitchManagmentDbContext dbContext, IMapper mapper, IFilterApplier<SwitchFilter, SwitchEntity> filterApplier) : 
         CommonListQueryHandler<GetSwitchesListQuery, SwitchesListResponse, SwitchLookupDto, SwitchSortField, SwitchFilter, SwitchEntity>(dbContext, mapper, filterApplier)
     {

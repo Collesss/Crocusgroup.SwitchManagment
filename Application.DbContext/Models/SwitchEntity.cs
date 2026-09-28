@@ -28,6 +28,6 @@ namespace Application.DbContext.Models
 
         public IEnumerable<VlanAceEntity> VlanACL { get; set; }
 
-        public IEnumerable<VlanOnPortAceEntity> VlanOnPortACL { get; set; }
+        //public IEnumerable<VlanOnPortAceEntity> VlanOnPortACL { get; set; }
     }
 }

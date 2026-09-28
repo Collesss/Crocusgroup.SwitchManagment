@@ -21,7 +21,7 @@ namespace Application.Common.Behaviors
             }
             catch (Exception e)
             {
-                throw new AppException("An unknown error occurred, see innerException.", e);
+                throw new UnexpectedAppException("An unknown error occurred, see innerException.", e);
             }
         }
     }

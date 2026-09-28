@@ -15,12 +15,19 @@ namespace Application.CurrentUserService.Security
 
         public static class Switch
         {
-            public const string List        = "switch.list";
-            public const string View        = "switch.view";
-            public const string Add         = "switch.add";
-            public const string Delete      = "switch.delete";
-            public const string Update      = "switch.update";
-            public const string AclBypass   = "switch.acl_bypass";
+            public const string List = "switch.list";
+            public const string View = "switch.view";
+            public const string Add = "switch.add";
+            public const string Delete = "switch.delete";
+            public const string Update = "switch.update";
+            public const string AclBypass = "switch.acl_bypass";
+        }
+
+        public static class Port
+        {
+            public const string ConfigureAsAccess   = "port.access";
+            public const string ConfigureAsTrunk    = "port.trunk";
+            public const string AclBypass           = "port.acl_bypass";
         }
 
         public static class ACL
@@ -35,28 +42,28 @@ namespace Application.CurrentUserService.Security
             }
             public static class Port
             {
-                public const string List = "acl.port.list";
-                public const string View = "acl.port.view";
-                public const string Add = "acl.port.add";
-                public const string Delete = "acl.port.delete";
-                public const string Update = "acl.port.update";
+                public const string List    = "acl.port.list";
+                public const string View    = "acl.port.view";
+                public const string Add     = "acl.port.add";
+                public const string Delete  = "acl.port.delete";
+                public const string Update  = "acl.port.update";
             }
 
             public static class Vlan
             {
-                public const string List = "acl.vlan.list";
-                public const string View = "acl.vlan.view";
-                public const string Add = "acl.vlan.add";
-                public const string Delete = "acl.vlan.delete";
-                public const string Update = "acl.vlan.update";
+                public const string List    = "acl.vlan.list";
+                public const string View    = "acl.vlan.view";
+                public const string Add     = "acl.vlan.add";
+                public const string Delete  = "acl.vlan.delete";
+                public const string Update  = "acl.vlan.update";
             }
             public static class VlanOnPort
             {
-                public const string List = "acl.vlanOnPort.list";
-                public const string View = "acl.vlanOnPort.view";
-                public const string Add = "acl.vlanOnPort.add";
-                public const string Delete = "acl.vlanOnPort.delete";
-                public const string Update = "acl.vlanOnPort.update";
+                public const string List    = "acl.vlanOnPort.list";
+                public const string View    = "acl.vlanOnPort.view";
+                public const string Add     = "acl.vlanOnPort.add";
+                public const string Delete  = "acl.vlanOnPort.delete";
+                public const string Update  = "acl.vlanOnPort.update";
             }
         }
 

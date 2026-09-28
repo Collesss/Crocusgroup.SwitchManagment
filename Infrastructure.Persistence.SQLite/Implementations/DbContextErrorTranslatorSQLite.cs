@@ -11,11 +11,12 @@ namespace Infrastructure.Persistence.SQLite.Implementations
         {
             return exception switch 
             {
-                DbUpdateException e => new NotFoundDbContextException("", exception),
+                DbUpdateException e => new NotFoundAppException("", exception),
                 _ => throw new AppException("Unknow error.", exception)
             };
         }
 
+        /*
         DbContextException IDbContextErrorTranslator.Translate(Exception exception)
         {
             return exception switch
@@ -24,5 +25,6 @@ namespace Infrastructure.Persistence.SQLite.Implementations
                 _ => throw new AppException("Unknow error.", exception)
             };
         }
+        */
     }
 }

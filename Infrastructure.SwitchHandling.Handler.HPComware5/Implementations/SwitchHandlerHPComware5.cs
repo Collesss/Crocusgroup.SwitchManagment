@@ -120,11 +120,11 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             }
             catch (SshAuthenticationException e) when (e.Message == "Permission denied (password).")
             {
-                throw new WrongLoginOrPassSwitchHandlerException("Wrong login or pass.", e);
+                throw new WrongLoginOrPassAppException("Wrong login or pass.", e);
             }
             catch (SocketException e)
             {
-                throw new HostNotExistOrUnreachableSwitchHandlerException("Host not exist or unreachable.", e);
+                throw new SwitchUnreachableAppException("Host not exist or unreachable.", e);
             }
 
             return sshClient;
@@ -194,7 +194,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             shellStream.WriteLine("Y");
             shellStream.WriteLine(superPassword);
 
-            shellStream.Expect(new ExpectAction("Error: Invalid password.", _ => throw new WrongSuperPassSwitchHandlerException("Wrong super pass.")),
+            shellStream.Expect(new ExpectAction("Error: Invalid password.", _ => throw new WrongSuperPassAppException("Wrong super pass.")),
                 new ExpectAction("Warning: Now you enter an all-command mode for developer's testing, some commands may affect operation by wrong use, please carefully use it with our engineer's direction.", _ => { }));
 
             shellStream.WriteLine("screen-length disable");
@@ -237,7 +237,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             shellStream.WriteLineAndExpect($"interface {interfaceName}");
 
             shellStream.Expect(new ExpectAction("% Wrong parameter found at '^' position.", _ =>
-                throw new WrongInterfaceSwitchHandlerException("Wrong interface.")),
+                throw new WrongInterfaceAppException("Wrong interface.")),
                         new ExpectAction(SystemViewPromtShellRegex, _ => { }));
         }
 
@@ -255,7 +255,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             shellStream.WriteLineAndExpect($"port link-type {Enum.GetName(linkType)}");
 
             shellStream.Expect(new ExpectAction("% Unrecognized command found at '^' position.", _ =>
-                    throw new WrongInterfaceSwitchHandlerException("Wrong interface.")),
+                    throw new WrongInterfaceAppException("Wrong interface.")),
                             new ExpectAction(SystemViewPromtShellRegex, _ => { }));
         }
 
@@ -264,7 +264,7 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
             IEnumerable<int> vlansOnSwitch = GetOnlyVlanNums(shellStream);
 
             if (!vlans.All(vl => vlansOnSwitch.Any(vlOnSw => vl == vlOnSw)))
-                throw new VLANNotExistSwitchHandlerException("Vlan not exists.");
+                throw new VLANNotExistAppException("Vlan not exists.");
         }
 
         private async Task CommonShellStream(Action<ShellStream> action, ConnectConfig connectConfig, CancellationToken cancellationToken = default)

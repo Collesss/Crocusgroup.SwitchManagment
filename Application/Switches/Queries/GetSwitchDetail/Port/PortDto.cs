@@ -10,7 +10,9 @@
 
         public PortStatusDto Status { get; set; }
 
-        public IEnumerable<VlanOnPort> Vlans { get; set; }
+        public IEnumerable<int> Vlans { get; set; }
+
+        //public IEnumerable<VlanOnPort> Vlans { get; set; }
 
         public bool CanConfigureAsAccess { get; set; }
         

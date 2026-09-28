@@ -23,7 +23,7 @@ namespace Infrastructure.Persistence
 
         public DbSet<VlanAceEntity> VlansACL { get; set; }
 
-        public DbSet<VlanOnPortAceEntity> VlanOnPortACL { get; set; }
+        //public DbSet<VlanOnPortAceEntity> VlanOnPortACL { get; set; }
 
         private readonly IDbContextErrorTranslator _errorTranslator;
 
@@ -49,7 +49,7 @@ namespace Infrastructure.Persistence
 
             modelBuilder.ApplyConfiguration(new SwitchAceDbEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PortAceDbEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new VlanAceDbEntityConfiguration());
+            //modelBuilder.ApplyConfiguration(new VlanAceDbEntityConfiguration());
             modelBuilder.ApplyConfiguration(new VlanOnPortAceDbEntityConfiguration());
         }
 
@@ -74,7 +74,7 @@ namespace Infrastructure.Persistence
                 }
                 catch (Exception e2)
                 {
-                    throw new DbContextException("An unknown error occurred while save changes, see innerException.", e2);
+                    throw new UnexpectedAppException("An unknown error occurred while save changes, see innerException.", e2);
                 }
             }
         }
