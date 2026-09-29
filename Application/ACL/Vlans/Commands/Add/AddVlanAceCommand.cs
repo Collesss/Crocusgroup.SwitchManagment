@@ -1,4 +1,4 @@
-﻿using Application.ACL.Common;
+﻿using Application.ACL.Common.Commands;
 using Application.ACL.Vlans.Common;
 using MediatR;
 
@@ -10,7 +10,7 @@ namespace Application.ACL.Vlans.Commands.Add
     public class AddVlanAceCommand : CommonAddAceCommand<VlanRigthsMask>, IRequest<int>
     {
         /// <summary>
-        /// Id vlan, cant less than 1 or great than 4094
+        /// Id vlan, cant be less than 1 or great than 4094
         /// </summary>
         public int VlanId {  get; set; }
     }

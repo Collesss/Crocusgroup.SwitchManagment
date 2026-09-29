@@ -1,4 +1,4 @@
-﻿namespace Application.ACL.Common
+﻿namespace Application.ACL.Common.Filter
 {
     public class CommonAceFilter
     {

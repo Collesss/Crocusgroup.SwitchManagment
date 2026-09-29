@@ -15,13 +15,14 @@ namespace Infrastructure.Persistence.ModelsConfigurations.ACE
                 .IsRequired();
 
             builder.HasIndex(valnOnPortAce => new { valnOnPortAce.SwitchId, valnOnPortAce.VlanId, valnOnPortAce.InterfaceName, valnOnPortAce.GroupId });
-
+            /*
             builder.HasOne(valnOnPortAce => valnOnPortAce.Switch)
                 .WithMany(@switch => @switch.VlanOnPortACL)
                 .HasPrincipalKey(@switch => @switch.Id)
                 .HasForeignKey(valnOnPortAce => valnOnPortAce.SwitchId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+            */
         }
     }
 }

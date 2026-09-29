@@ -1,4 +1,4 @@
-﻿namespace Application.ACL.Common
+﻿namespace Application.ACL.Common.Commands
 {
     /// <summary>
     /// Common command for add ace.
@@ -13,7 +13,7 @@
         public int SwitchId { get; set; }
 
         /// <summary>
-        /// Group id, cant be null empty, contains only whitespace or be length great or equal than 150.
+        /// Group id, cant be null, empty, contains only whitespace or be longer 150 char.
         /// </summary>
         public string GroupId { get; set; }
 

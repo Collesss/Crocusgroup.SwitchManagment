@@ -1,4 +1,4 @@
-﻿using Application.ACL.Common;
+﻿using Application.ACL.Common.Filter;
 using Application.DbContext.Models.ACE.Switch;
 
 namespace Application.ACL.Switches.Queries.GetSwitchAcesList

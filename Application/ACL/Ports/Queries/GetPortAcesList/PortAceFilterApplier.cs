@@ -1,4 +1,4 @@
-﻿using Application.ACL.Common;
+﻿using Application.ACL.Common.Filter;
 using Application.DbContext.Models.ACE.Port;
 
 namespace Application.ACL.Ports.Queries.GetPortAcesList

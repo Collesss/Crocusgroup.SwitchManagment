@@ -5,6 +5,7 @@
         Id,
         SwitchId,
         GroupId,
-        RightsMask
+        RightsMask,
+        InterfaceName
     }
 }

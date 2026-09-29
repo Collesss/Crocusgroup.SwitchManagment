@@ -3,10 +3,10 @@ using Application.DbContext.Models;
 using MapsterMapper;
 using MediatR;
 
-namespace Application.Common.Commands
+namespace Application.Common.Commands.Delete
 {
     public abstract class CommonDeleteCommandHandler<TCommand, TEntity> : IRequestHandler<TCommand>
-        where TCommand : IRequest
+        where TCommand : CommonDeleteCommand, IRequest
         where TEntity : BaseEntity
     {
         protected readonly ISwitchManagmentDbContext _dbContext;
@@ -24,6 +24,5 @@ namespace Application.Common.Commands
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-
     }
 }

@@ -4,15 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.ModelsConfigurations.ACE
 {
-    public class SwitchAceDbEntityConfiguration : IEntityTypeConfiguration<SwitchAceEntity>
+    public class SwitchAceDbEntityConfiguration : BaseAceDbEntityConfiguration<SwitchAceEntity, SwitchRights>
     {
-        public void Configure(EntityTypeBuilder<SwitchAceEntity> builder)
+        public override void Configure(EntityTypeBuilder<SwitchAceEntity> builder)
         {
-            builder.HasKey(switchAce => switchAce.Id);
-
-            builder.Property(switchAce => switchAce.GroupId)
-                .HasMaxLength(100)
-                .IsRequired();
+            base.Configure(builder);
 
             builder.HasIndex(switchAce => new { switchAce.SwitchId, switchAce.GroupId })
                 .IsUnique();

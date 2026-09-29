@@ -3,7 +3,7 @@ using Application.ACL.Switches.Common;
 
 namespace Application.ACL.Switches.Queries.GetSwitchAceDetail
 {
-    public class PortAceDetailResponse : CommonAceDto<SwitchRightsMask>
+    public class SwitchAceDetailResponse : CommonAceDto<SwitchRightsMask>
     {
     }
 }

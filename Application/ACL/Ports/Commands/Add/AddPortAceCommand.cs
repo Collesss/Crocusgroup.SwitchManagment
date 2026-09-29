@@ -1,4 +1,4 @@
-﻿using Application.ACL.Common;
+﻿using Application.ACL.Common.Commands;
 using Application.ACL.Ports.Common;
 using MediatR;
 
@@ -10,7 +10,7 @@ namespace Application.ACL.Ports.Commands.Add
     public class AddPortAceCommand : CommonAddAceCommand<PortRightsMask>, IRequest<int>
     {
         /// <summary>
-        /// Interface name, cant be null, empty or contains only whitespaces.
+        /// Interface name, cant be null, empty, contains only whitespace or be longer 100 char.
         /// </summary>
         public string InterfaceName { get; set; }
     }

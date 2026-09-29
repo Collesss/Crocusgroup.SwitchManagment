@@ -4,15 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.ModelsConfigurations.ACE
 {
-    public class VlanAceDbEntityConfiguration : IEntityTypeConfiguration<VlanAceEntity>
+    public class VlanAceDbEntityConfiguration : BaseAceDbEntityConfiguration<VlanAceEntity, VlanRigths>
     {
-        public void Configure(EntityTypeBuilder<VlanAceEntity> builder)
+        public override void Configure(EntityTypeBuilder<VlanAceEntity> builder)
         {
-            builder.HasKey(vlanAce => vlanAce.Id);
-
-            builder.Property(vlanAce => vlanAce.GroupId)
-                .HasMaxLength(100)
-                .IsRequired();
+            base.Configure(builder);
 
             builder.HasIndex(vlanAce => new { vlanAce.SwitchId, vlanAce.VlanId, vlanAce.GroupId });
 

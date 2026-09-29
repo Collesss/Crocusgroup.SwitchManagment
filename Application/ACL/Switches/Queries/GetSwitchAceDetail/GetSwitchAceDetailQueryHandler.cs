@@ -7,8 +7,8 @@ using MapsterMapper;
 namespace Application.ACL.Switches.Queries.GetSwitchAceDetail
 {
     [RequirePermission(Permissions.ACL.Switch.View)]
-    public class GetPortAceDetailQueryHandler(ISwitchManagmentDbContext dbContext, IMapper mapper) : 
-        CommonDetailQueryHandler<GetPortAceDetailQuery, PortAceDetailResponse, SwitchAceEntity>(dbContext, mapper)
+    public class GetSwitchAceDetailQueryHandler(ISwitchManagmentDbContext dbContext, IMapper mapper) : 
+        CommonDetailQueryHandler<GetSwitchAceDetailQuery, SwitchAceDetailResponse, SwitchAceEntity>(dbContext, mapper)
     {
     }
 }

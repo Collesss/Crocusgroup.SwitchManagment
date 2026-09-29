@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.ModelsConfigurations.ACE
 {
-    public class PortAceDbEntityConfiguration : IEntityTypeConfiguration<PortAceEntity>
+    public class PortAceDbEntityConfiguration : BaseAceDbEntityConfiguration<PortAceEntity, PortRights>
     {
-        public void Configure(EntityTypeBuilder<PortAceEntity> builder)
+        public override void Configure(EntityTypeBuilder<PortAceEntity> builder)
         {
-            builder.HasKey(portAce => portAce.Id);
+            base.Configure(builder);
 
-            builder.Property(portAce => portAce.GroupId)
-                .HasMaxLength(100)
-                .IsRequired();
+            builder.Property(portAce => portAce.InterfaceName)
+                .IsRequired()
+                .HasMaxLength(100);
 
             builder.HasIndex(portAce => new { portAce.SwitchId, portAce.GroupId, portAce.InterfaceName })
                 .IsUnique();

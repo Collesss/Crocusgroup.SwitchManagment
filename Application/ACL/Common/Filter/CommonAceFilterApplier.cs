@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.DbContext.Models.ACE;
 
-namespace Application.ACL.Common
+namespace Application.ACL.Common.Filter
 {
     public class CommonAceFilterApplier<TFilter, TEntity, TRightsMask> : IFilterApplier<TFilter, TEntity>
         where TFilter : CommonAceFilter

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="Mapster" Version="10.0.11" />
     <PackageReference Include="MediatR" Version="14.2.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.7.4" />
@@ -23,10 +24,6 @@
     <ProjectReference Include="..\Application.CurrentUserService\Application.CurrentUserService.csproj" />
     <ProjectReference Include="..\Application.DbContext\Application.DbContext.csproj" />
     <ProjectReference Include="..\Application.SwitchHandling.Provider\Application.SwitchHandling.Provider.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ACL\Vlans\Queries\" />
   </ItemGroup>
 
 </Project>
