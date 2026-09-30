@@ -21,7 +21,7 @@
         public string SearchByDescription { get; set; }
 
         /// <summary>
-        /// Filter by Handler, cant be great than 50.
+        /// Filter by Handler, cant be great than 100.
         /// </summary>
         public string SearchByHandler { get; set; }
     }

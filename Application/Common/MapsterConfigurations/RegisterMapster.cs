@@ -1,6 +1,4 @@
-﻿using Application.Switches.Commands.Add;
-using Application.Switches.Queries.GetSwitchesList;
-using Mapster;
+﻿using Mapster;
 
 namespace Application.Common.MapsterConfigurations
 {
