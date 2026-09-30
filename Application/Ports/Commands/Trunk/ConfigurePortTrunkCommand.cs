@@ -1,13 +1,10 @@
-﻿using MediatR;
+﻿using Application.Ports.Commands.Common;
+using MediatR;
 
 namespace Application.Ports.Commands.Trunk
 {
-    public class ConfigurePortTrunkCommand : IRequest
+    public class ConfigurePortTrunkCommand : CommonConfigurePortCommand, IRequest
     {
-        public int SwitchId { get; set; }
-
-        public string InterfaceName { get; set; }
-
         public IEnumerable<int> TrunkVlans { get; set; }
     }
 }

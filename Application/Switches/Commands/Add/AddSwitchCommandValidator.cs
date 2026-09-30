@@ -29,8 +29,10 @@ namespace Application.Switches.Commands.Add
                 .MaximumLength(150);
 
             RuleFor(addSwitchCommand => addSwitchCommand.SuperPassword)
-                .Must(value => value is null || !string.IsNullOrWhiteSpace(value))
-                .WithMessage("\"{PropertyName}\" cannot be empty or contains only whitespace.")
+                .NotEmpty()
+                    .When(addSwitchCommand => addSwitchCommand.SuperPassword is not null, ApplyConditionTo.CurrentValidator)
+                    .WithMessage("\"{PropertyName}\" cannot be empty or contains only whitespace.")
+                //.Must(value => value is null || !string.IsNullOrWhiteSpace(value))
                 .MaximumLength(150);
         }
     }
