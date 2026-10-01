@@ -6,8 +6,8 @@ using Application.DbContext.Models;
 using Application.DbContext.Models.ACE.Port;
 using Application.DbContext.Models.ACE.Switch;
 using Application.DbContext.Models.ACE.Vlan;
-using Application.Switches.Queries.GetSwitchDetail.Port;
 using Application.Switches.Queries.GetSwitchDetail.Response;
+using Application.Switches.Queries.GetSwitchDetail.Response.Port;
 using Application.SwitchHandling.Handler.Models;
 using Application.SwitchHandling.Provider.Interfaces;
 using Mapster;
@@ -68,38 +68,12 @@ namespace Application.Switches.Queries.GetSwitchDetail.Query
                 .AggregateBy(vlanAce => vlanAce.VlanId, VlanRigths.None, (rigths, vlanAce) => rigths & vlanAce.RightsMask)
                 .ToListAsync(cancellationToken);
 
-            response.Vlans = response.Vlans
-                .Where(vlan => vlanAcl.Any(vlanAce => vlanAce.Key == vlan.Id && vlanAce.Value.HasFlag(VlanRigths.View)))
-                .Select(vlan =>
-                {
-                    var vlanAce = vlanAcl.First(vlanAce => vlanAce.Key == vlan.Id);
+            
+            response.Vlans = vlanAcl.Join(switchInfo.Vlans, vlanAce => vlanAce.Key, vlanOnSwitch => vlanOnSwitch.Vlan, (vlanAce, vlanOnSwitch) => vlanOnSwitch.Adapt(_mapper.Map<VlanDto>(vlanAce)))
+                .ToArray();
 
-                    return new VlanDto
-                    {
-                        Id = vlan.Id,
-                        Name = vlan.Name,
-                        CanConfigureAsAccess = vlanAce.Value.HasFlag(VlanRigths.ConfigureAsAccess),
-                        CanConfigureAsTrunk = vlanAce.Value.HasFlag(VlanRigths.ConfigureAsTrunk)
-                    };
-                }).ToArray();
-
-            response.Ports = response.Ports
-                .Where(port => portAcl.Any(portAce => portAce.Key == port.InterfaceName && portAce.Value.HasFlag(PortRights.View)))
-                .Select(port => 
-                {
-                    var portAce = portAcl.First(portAce => portAce.Key == port.InterfaceName);
-
-                    return new PortDto 
-                    {
-                        InterfaceName = port.InterfaceName,
-                        Description = port.Description,
-                        PortType = port.PortType,
-                        Status = port.Status,
-                        CanConfigureAsAccess = portAce.Value.HasFlag(PortRights.ConfigureAsAccess),
-                        CanConfigureAsTrunk = portAce.Value.HasFlag(PortRights.ConfigureAsTrunk),
-                        Vlans = port.Vlans.Where(vlan => vlanAcl.Any(vlanAce => vlanAce.Key == vlan && vlanAce.Value.HasFlag(VlanRigths.View))).ToArray()
-                    };
-                });
+            response.Ports = portAcl.Join(switchInfo.Ports, portAce => portAce.Key, portOnSwitch => portOnSwitch.Interface, (portAce, portOnSwitch) => portOnSwitch.Adapt(_mapper.Map<PortDto>(portAce)))
+                .ToArray();
 
             return response;
         }
