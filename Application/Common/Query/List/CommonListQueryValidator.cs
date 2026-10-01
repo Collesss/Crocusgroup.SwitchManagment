@@ -12,7 +12,9 @@ namespace Application.Common.Query.List
             ArgumentNullException.ThrowIfNull(filterValidator, nameof(filterValidator));
 
             RuleFor(commonListQueryValidator => commonListQueryValidator.Filter)
-                .SetValidator(filterValidator);
+                .NotNull()
+                .SetValidator(filterValidator)
+                .When(commonListQueryValidator => commonListQueryValidator.Filter is not null, ApplyConditionTo.CurrentValidator);
 
             RuleFor(commonListQueryValidator => commonListQueryValidator.PageSize)
                 .InclusiveBetween(1, 100);

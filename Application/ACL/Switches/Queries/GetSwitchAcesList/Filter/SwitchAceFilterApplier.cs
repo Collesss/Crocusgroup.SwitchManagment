@@ -1,0 +1,15 @@
+﻿using Application.ACL.Common.Filter;
+using Application.DbContext.Models.ACE.Switch;
+
+namespace Application.ACL.Switches.Queries.GetSwitchAcesList.Filter
+{
+    public class PortAceFilterApplier : CommonAceFilterApplier<SwitchAceFilter, SwitchAceEntity, SwitchRights>
+    {
+        public override IQueryable<SwitchAceEntity> ApplyFilter(SwitchAceFilter filter, IQueryable<SwitchAceEntity> entities)
+        {
+            var query = base.ApplyFilter(filter, entities);
+
+            return query;
+        }
+    }
+}

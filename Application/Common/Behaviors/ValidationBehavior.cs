@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Common.Exceptions;
+using FluentValidation;
 using MediatR;
 
 namespace Application.Common.Behaviors
@@ -14,8 +15,13 @@ namespace Application.Common.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            foreach (var validator in _validators)
-                validator.ValidateAndThrow(request);
+            var validationResult = _validators
+                .SelectMany(validator => validator.Validate(request).Errors)
+                .GroupBy(error => error.PropertyName, error => error.ErrorMessage)
+                .ToDictionary(group => group.Key, group => group.ToArray());
+
+            if (validationResult.Count != 0)
+                throw new ValidationAppException(validationResult);
 
             return await next(cancellationToken);
         }

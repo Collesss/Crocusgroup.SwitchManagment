@@ -1,6 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Switches.Commands.Add;
 using Application.Switches.Queries.GetSwitchDetail;
+using Application.Switches.Queries.GetSwitchDetail.Response;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
