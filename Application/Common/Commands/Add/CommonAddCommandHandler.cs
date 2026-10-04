@@ -3,16 +3,16 @@ using Application.DbContext.Models;
 using MapsterMapper;
 using MediatR;
 
-namespace Application.Common.Commands
+namespace Application.Common.Commands.Add
 {
-    public abstract class CommonAddComandHandler<TCommand, TEntity> : IRequestHandler<TCommand, int>
+    public abstract class CommonAddCommandHandler<TCommand, TEntity> : IRequestHandler<TCommand, int>
         where TCommand : IRequest<int>
         where TEntity : BaseEntity
     {
         protected readonly ISwitchManagmentDbContext _dbContext;
         protected readonly IMapper _mapper;
 
-        public CommonAddComandHandler(ISwitchManagmentDbContext dbContext, IMapper mapper)
+        public CommonAddCommandHandler(ISwitchManagmentDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

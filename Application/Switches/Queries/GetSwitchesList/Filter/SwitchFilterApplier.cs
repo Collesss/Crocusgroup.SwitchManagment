@@ -3,12 +3,11 @@ using Application.CurrentUserService.Interfaces;
 using Application.CurrentUserService.Security;
 using Application.DbContext.Models;
 using Application.DbContext.Models.ACE.Switch;
-using Application.Switches.Queries.GetSwitchesList.Query;
 using System.Linq.Dynamic.Core;
 
 namespace Application.Switches.Queries.GetSwitchesList.Filter
 {
-    public class SwitchFilterApplier : IFilterApplier<GetSwitchesListQuery, SwitchEntity>
+    public class SwitchFilterApplier : IFilterApplier<SwitchFilter, SwitchEntity>
     {
         private readonly ICurrentUserService _currentUserService;
 
@@ -17,11 +16,12 @@ namespace Application.Switches.Queries.GetSwitchesList.Filter
             _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
         }
 
-        public IQueryable<SwitchEntity> ApplyFilter(GetSwitchesListQuery filter, IQueryable<SwitchEntity> entities)
+        public IQueryable<SwitchEntity> ApplyFilter(SwitchFilter filter, IQueryable<SwitchEntity> entities)
         {
+            /*
             ArgumentNullException.ThrowIfNull(filter, nameof(filter));
             ArgumentNullException.ThrowIfNull(entities, nameof(entities));
-            
+            */
             var notNullAndEmptySearchProps = filter.GetType().GetProperties()
                     .Where(prop => prop.Name.StartsWith("SearchBy") && prop.GetValue(filter) is string str && !string.IsNullOrEmpty(str));
 

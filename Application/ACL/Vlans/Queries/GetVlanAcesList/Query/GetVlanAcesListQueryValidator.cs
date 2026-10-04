@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace Application.ACL.Vlans.Queries.GetVlanAcesList.Query
 {
-    public class GetVlanAcesListQueryValidator(AbstractValidator<VlanAceFilter> filterValidator) 
+    public class GetVlanAcesListQueryValidator(IValidator<VlanAceFilter> filterValidator) 
         : CommonListQueryValidator<GetVlanAcesListQuery, VlanAceFilter, VlanAceSortField>(filterValidator)
     {
     }

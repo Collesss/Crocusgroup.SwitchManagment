@@ -1,9 +1,19 @@
+using Application.Common.Behaviors;
+using Application.Common.Interfaces;
 using Application.CurrentUserService.Interfaces;
 using Application.DbContext;
+using Application.SwitchHandling.Handler.Interfaces;
+using Application.SwitchHandling.Provider.Interfaces;
+using FluentValidation;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Interfaces;
+using Infrastructure.Persistence.SQLite.Implementations;
+using Infrastructure.SwitchHandling.Handler.HPComware5.Implementations;
+using Infrastructure.SwitchHandling.Provider.DI.Implementations;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using WebAPI.Options;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -22,8 +32,16 @@ namespace WebAPI
 
             builder.Services.AddMapster();
 
-            builder.Services.AddMediatR(cfg => 
-                cfg.RegisterServicesFromAssembly(Assembly.Load("Application")));
+            TypeAdapterConfig.GlobalSettings.Scan(Assembly.Load("Application"));
+
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.Load("Application"));
+
+                cfg.AddOpenBehavior(typeof(ExceptionHandlingBehavior<,>));
+                cfg.AddOpenBehavior(typeof(PermissionAuthorizationBehavior<,>));
+                cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            });
 
 
             builder.Services.AddDbContext<SwitchManagmentDbContext>(opts =>
@@ -32,6 +50,34 @@ namespace WebAPI
             builder.Services.AddScoped<ISwitchManagmentDbContext>(provider => provider.GetRequiredService<SwitchManagmentDbContext>());
 
             builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            builder.Services.AddScoped<ISwitchHandlerProvider, SwitchHandlerProviderDI>();
+
+            builder.Services.AddKeyedScoped<ISwitchHandler, SwitchHandlerHPComware5>("HP5");
+
+            builder.Services.Scan(typeSourceSelector =>
+            {
+                typeSourceSelector.FromAssemblies(Assembly.Load("Application"))
+                    .AddClasses(c => c.AssignableTo(typeof(IFilterApplier<,>)))
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime();
+
+                typeSourceSelector.FromAssemblies(Assembly.Load("Application"))
+                    .AddClasses(c => c.AssignableTo(typeof(IValidator<>)))
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime();
+            });
+
+            builder.Services.AddScoped<IDbContextErrorTranslator, DbContextErrorTranslatorSQLite>();
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.Configure<CurrentUserServiceOptions>(builder.Configuration.GetSection("Roles"));
+
+            /*
+            var types = Assembly.Load("Application").GetTypes()
+                .Where(t => t.GetInterfaceMap(typeof(IFilterApplier<,>)));
+            */
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

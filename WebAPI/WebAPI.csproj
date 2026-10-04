@@ -7,22 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\ACL\**" />
+    <Content Remove="Controllers\ACL\**" />
+    <EmbeddedResource Remove="Controllers\ACL\**" />
+    <None Remove="Controllers\ACL\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Mapster.DependencyInjection" Version="10.0.11" />
     <PackageReference Include="MediatR" Version="14.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="9.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.20" />
+    <PackageReference Include="Scrutor" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Application.CurrentUserService\Application.CurrentUserService.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure.Persistence.SQLite\Infrastructure.Persistence.SQLite.csproj" />
     <ProjectReference Include="..\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\ACL\" />
+    <ProjectReference Include="..\Infrastructure.SwitchHandling.Handler.HPComware5\Infrastructure.SwitchHandling.Handler.HPComware5.csproj" />
+    <ProjectReference Include="..\Infrastructure.SwitchHandling.Provider.DI\Infrastructure.SwitchHandling.Provider.DI.csproj" />
   </ItemGroup>
 
 </Project>

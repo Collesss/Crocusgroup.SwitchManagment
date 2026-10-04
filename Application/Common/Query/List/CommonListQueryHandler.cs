@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.DbContext;
 using Application.DbContext.Models;
+using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +43,7 @@ namespace Application.Common.Query.List
                 .Take(request.PageSize);
 
             var result = _mapper.Map<TQuery, TResponse>(request);
-            result.Entities = _mapper.Map<IEnumerable<TContextEntity>, IEnumerable<TResponseLookupDto>>(await query.ToListAsync(cancellationToken));
+            result.Entities = await query.ProjectToType<TResponseLookupDto>().ToListAsync(cancellationToken); //_mapper.Map<IEnumerable<TContextEntity>, IEnumerable<TResponseLookupDto>>(await query.ToListAsync(cancellationToken));
             result.TotalCount = totalCount;
             result.PageNumber = actualPageNumber;
 

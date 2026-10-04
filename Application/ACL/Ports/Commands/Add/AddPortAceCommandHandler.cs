@@ -1,4 +1,4 @@
-﻿using Application.Common.Commands;
+﻿using Application.Common.Commands.Add;
 using Application.CurrentUserService.Security;
 using Application.DbContext;
 using Application.DbContext.Models.ACE.Port;
@@ -8,7 +8,7 @@ namespace Application.ACL.Ports.Commands.Add
 {
     [RequirePermission(Permissions.ACL.Port.Add)]
     public class AddPortAceCommandHandler(ISwitchManagmentDbContext dbContext, IMapper mapper) : 
-        CommonAddComandHandler<AddPortAceCommand, PortAceEntity>(dbContext, mapper)
+        CommonAddCommandHandler<AddPortAceCommand, PortAceEntity>(dbContext, mapper)
     {
     }
 }

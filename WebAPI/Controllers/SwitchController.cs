@@ -1,10 +1,12 @@
 ﻿using Application.Common.Exceptions;
 using Application.Switches.Commands.Add;
 using Application.Switches.Queries.GetSwitchDetail;
+using Application.Switches.Queries.GetSwitchDetail.Query;
 using Application.Switches.Queries.GetSwitchDetail.Response;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Models.Dto.Switch.Request;
 
 namespace WebAPI.Controllers
 {
@@ -13,12 +15,13 @@ namespace WebAPI.Controllers
     public class SwitchController : ControllerBase
     {
         private readonly IMediator _mediator;
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
 
         public SwitchController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /*
@@ -43,8 +46,8 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] AddSwitchCommand addSwitch) =>
-            Ok(await _mediator.Send(addSwitch));
+        public async Task<ActionResult<int>> Post([FromBody] SwitchAddRequestDto addSwitch) =>
+            Ok(await _mediator.Send(_mapper.Map<SwitchAddRequestDto, AddSwitchCommand>(addSwitch)));
 
 
         /*

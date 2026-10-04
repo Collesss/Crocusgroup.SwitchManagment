@@ -7,7 +7,7 @@ namespace Application.Common.Query.List
         where TFilter : class, new()
         where TSortField : Enum
     {
-        public CommonListQueryValidator(AbstractValidator<TFilter> filterValidator) 
+        public CommonListQueryValidator(IValidator<TFilter> filterValidator) 
         {
             ArgumentNullException.ThrowIfNull(filterValidator, nameof(filterValidator));
 

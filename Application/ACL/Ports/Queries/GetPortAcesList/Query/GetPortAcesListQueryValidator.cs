@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace Application.ACL.Ports.Queries.GetPortAcesList.Query
 {
-    public class GetPortAcesListQueryValidator(AbstractValidator<PortAceFilter> filterValidator) 
+    public class GetPortAcesListQueryValidator(IValidator<PortAceFilter> filterValidator) 
         : CommonListQueryValidator<GetPortAcesListQuery, PortAceFilter, PortAceSortField>(filterValidator)
     {
     }

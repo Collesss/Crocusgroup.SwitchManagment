@@ -7,7 +7,7 @@ namespace Application.ACL.Switches.Queries.GetSwitchAcesList.Query
 {
     public class GetSwitchAcesListQueryValidator : CommonListQueryValidator<GetSwitchAcesListQuery, SwitchAceFilter, SwitchAceSortField>
     {
-        public GetSwitchAcesListQueryValidator(AbstractValidator<SwitchAceFilter> filterValidator) : base(filterValidator)
+        public GetSwitchAcesListQueryValidator(IValidator<SwitchAceFilter> filterValidator) : base(filterValidator)
         {
         }
     }
