@@ -1,18 +1,8 @@
-using Application.Common.Behaviors;
-using Application.Common.Interfaces;
+using Application.Common;
 using Application.CurrentUserService.Interfaces;
-using Application.DbContext;
-using Application.SwitchHandling.Handler.Interfaces;
-using Application.SwitchHandling.Provider.Interfaces;
-using FluentValidation;
-using Infrastructure.Persistence;
-using Infrastructure.Persistence.Interfaces;
-using Infrastructure.Persistence.SQLite.Implementations;
-using Infrastructure.SwitchHandling.Handler.HPComware5.Implementations;
-using Infrastructure.SwitchHandling.Provider.DI.Implementations;
-using Mapster;
+using Infrastructure.Persistence.DI;
+using Infrastructure.SwitchHandling.DI;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using WebAPI.Options;
 using WebAPI.Services;
 
@@ -30,48 +20,14 @@ namespace WebAPI
 
             builder.Services.AddProblemDetails();
 
-            builder.Services.AddMapster();
 
-            TypeAdapterConfig.GlobalSettings.Scan(Assembly.Load("Application"));
+            builder.Services.AddApplication();
+            builder.Services.AddPersistance(builder.Configuration.GetConnectionString("SQLiteConnection"));
+            builder.Services.AddSwitchHandlingInfrastructure();
 
-            builder.Services.AddMediatR(cfg =>
-            {
-                cfg.RegisterServicesFromAssembly(Assembly.Load("Application"));
-
-                cfg.AddOpenBehavior(typeof(ExceptionHandlingBehavior<,>));
-                cfg.AddOpenBehavior(typeof(PermissionAuthorizationBehavior<,>));
-                cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-            });
-
-
-            builder.Services.AddDbContext<SwitchManagmentDbContext>(opts =>
-                opts.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection")));
-
-            builder.Services.AddScoped<ISwitchManagmentDbContext>(provider => provider.GetRequiredService<SwitchManagmentDbContext>());
 
             builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-
-            builder.Services.AddScoped<ISwitchHandlerProvider, SwitchHandlerProviderDI>();
-
-            builder.Services.AddKeyedScoped<ISwitchHandler, SwitchHandlerHPComware5>("HP5");
-
-            builder.Services.Scan(typeSourceSelector =>
-            {
-                typeSourceSelector.FromAssemblies(Assembly.Load("Application"))
-                    .AddClasses(c => c.AssignableTo(typeof(IFilterApplier<,>)))
-                    .AsImplementedInterfaces()
-                    .WithScopedLifetime();
-
-                typeSourceSelector.FromAssemblies(Assembly.Load("Application"))
-                    .AddClasses(c => c.AssignableTo(typeof(IValidator<>)))
-                    .AsImplementedInterfaces()
-                    .WithScopedLifetime();
-            });
-
-            builder.Services.AddScoped<IDbContextErrorTranslator, DbContextErrorTranslatorSQLite>();
-
             builder.Services.AddHttpContextAccessor();
-
             builder.Services.Configure<CurrentUserServiceOptions>(builder.Configuration.GetSection("Roles"));
 
             /*
