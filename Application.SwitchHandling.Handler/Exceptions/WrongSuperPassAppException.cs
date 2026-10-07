@@ -1,6 +1,8 @@
-﻿namespace Application.SwitchHandling.Handler.Exceptions
+﻿using Application.Common.Exceptions;
+
+namespace Application.SwitchHandling.Handler.Exceptions
 {
-    public class WrongSuperPassAppException : SwitchHandlerException
+    public class WrongSuperPassAppException : AppException
     {
         public WrongSuperPassAppException() { }
 

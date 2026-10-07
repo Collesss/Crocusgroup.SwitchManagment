@@ -18,7 +18,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Application.CurrentUserService\Application.CurrentUserService.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure.Persistence.DI\Infrastructure.Persistence.DI.csproj" />
     <ProjectReference Include="..\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Infrastructure.SwitchHandling.DI\Infrastructure.SwitchHandling.DI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

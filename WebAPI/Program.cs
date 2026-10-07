@@ -1,9 +1,9 @@
+using Application.Common;
 using Application.CurrentUserService.Interfaces;
-using Application.DbContext;
-using Infrastructure.Persistence;
-using Mapster;
+using Infrastructure.Persistence.DI;
+using Infrastructure.SwitchHandling.DI;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using WebAPI.Options;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -20,18 +20,20 @@ namespace WebAPI
 
             builder.Services.AddProblemDetails();
 
-            builder.Services.AddMapster();
 
-            builder.Services.AddMediatR(cfg => 
-                cfg.RegisterServicesFromAssembly(Assembly.Load("Application")));
+            builder.Services.AddApplication();
+            builder.Services.AddPersistance(builder.Configuration.GetConnectionString("SQLiteConnection"));
+            builder.Services.AddSwitchHandlingInfrastructure();
 
-
-            builder.Services.AddDbContext<SwitchManagmentDbContext>(opts =>
-                opts.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection")));
-
-            builder.Services.AddScoped<ISwitchManagmentDbContext>(provider => provider.GetRequiredService<SwitchManagmentDbContext>());
 
             builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.Configure<CurrentUserServiceOptions>(builder.Configuration.GetSection("Roles"));
+
+            /*
+            var types = Assembly.Load("Application").GetTypes()
+                .Where(t => t.GetInterfaceMap(typeof(IFilterApplier<,>)));
+            */
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

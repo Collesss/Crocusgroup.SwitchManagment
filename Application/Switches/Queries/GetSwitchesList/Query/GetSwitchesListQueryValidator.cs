@@ -7,7 +7,7 @@ namespace Application.Switches.Queries.GetSwitchesList.Query
 {
     public class GetSwitchesListQueryValidator : CommonListQueryValidator<GetSwitchesListQuery, SwitchFilter, SwitchSortField>
     {
-        public GetSwitchesListQueryValidator(AbstractValidator<SwitchFilter> filterValidator) : base(filterValidator)
+        public GetSwitchesListQueryValidator(IValidator<SwitchFilter> filterValidator) : base(filterValidator)
         {
         }
     }

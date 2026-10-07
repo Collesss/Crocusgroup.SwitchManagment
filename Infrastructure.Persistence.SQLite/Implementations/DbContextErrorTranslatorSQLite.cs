@@ -12,7 +12,7 @@ namespace Infrastructure.Persistence.SQLite.Implementations
             return exception switch 
             {
                 DbUpdateException e => new NotFoundAppException("", exception),
-                _ => throw new AppException("Unknow error.", exception)
+                _ => throw new UnexpectedAppException("Unknow error.", exception)
             };
         }
 

@@ -27,7 +27,7 @@ namespace Infrastructure.SwitchHandling.Provider.DI.Implementations
             }
             catch(Exception e)
             {
-                throw new HandlerProviderException("An unknown error occurred while getting the handler, see inner exception.", e);
+                throw new FailedLoadingHandlerException("An unknown error occurred while load the handler, see inner exception.", e);
             }
         }
     }

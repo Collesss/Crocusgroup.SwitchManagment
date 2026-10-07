@@ -12,11 +12,11 @@ namespace WebAPI.Services
 
         public bool IsAuthenticated { get; }
 
-        public CurrentUserService(HttpContextAccessor httpContextAccessor, IOptionsSnapshot<CurrentUserServiceOptions> options)
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor, IOptionsSnapshot<CurrentUserServiceOptions> options)
         {
             ArgumentNullException.ThrowIfNull(httpContextAccessor, nameof(httpContextAccessor));
 
-            IsAuthenticated = httpContextAccessor?.HttpContext?.User is not null;
+            IsAuthenticated = httpContextAccessor?.HttpContext?.User is not null && (httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated ?? false);
 
             if (IsAuthenticated)
             {

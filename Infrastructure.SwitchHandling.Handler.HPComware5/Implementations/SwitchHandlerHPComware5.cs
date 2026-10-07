@@ -1,4 +1,5 @@
-﻿using Application.SwitchHandling.Handler.Exceptions;
+﻿using Application.Common.Exceptions;
+using Application.SwitchHandling.Handler.Exceptions;
 using Application.SwitchHandling.Handler.Interfaces;
 using Application.SwitchHandling.Handler.Models;
 using Renci.SshNet;
@@ -278,13 +279,13 @@ namespace Infrastructure.SwitchHandling.Handler.HPComware5.Implementations
 
                 action(shellStream);
             }
-            catch (SwitchHandlerException)
+            catch (AppException)
             {
                 throw;
             }
             catch (Exception e)
             {
-                throw new SwitchHandlerException("An unknown error occurred, see innerException.", e);
+                throw new UnexpectedAppException("An unknown error occurred, see innerException.", e);
             }
             finally
             {
