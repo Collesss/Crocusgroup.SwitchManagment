@@ -1,4 +1,5 @@
-﻿using Application.Switches.Queries.GetSwitchDetail.Response;
+﻿using Application.Common.Query.Detail;
+using Application.Switches.Queries.GetSwitchDetail.Response;
 using MediatR;
 
 namespace Application.Switches.Queries.GetSwitchDetail.Query
@@ -6,11 +7,7 @@ namespace Application.Switches.Queries.GetSwitchDetail.Query
     /// <summary>
     /// Query for get switch by Id.
     /// </summary>
-    public class GetSwitchDetailQuery : IRequest<SwitchDetailResponse>
+    public class GetSwitchDetailQuery : CommonDetailQuery, IRequest<SwitchDetailResponse>
     {
-        /// <summary>
-        /// Switch Id, cant be less 1
-        /// </summary>
-        public int Id { get; set; }
     }
 }

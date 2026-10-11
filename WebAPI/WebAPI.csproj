@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\ACL\**" />
+    <Content Remove="Controllers\ACL\**" />
+    <EmbeddedResource Remove="Controllers\ACL\**" />
+    <None Remove="Controllers\ACL\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Mapster.DependencyInjection" Version="10.0.13" />
     <PackageReference Include="MediatR" Version="14.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="10.0.12" />
@@ -21,10 +28,6 @@
     <ProjectReference Include="..\Infrastructure.Persistence.DI\Infrastructure.Persistence.DI.csproj" />
     <ProjectReference Include="..\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\Infrastructure.SwitchHandling.DI\Infrastructure.SwitchHandling.DI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\ACL\" />
   </ItemGroup>
 
 </Project>
