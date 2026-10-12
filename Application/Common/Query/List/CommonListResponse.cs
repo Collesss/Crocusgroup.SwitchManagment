@@ -1,9 +1,8 @@
 ﻿namespace Application.Common.Query.List
 {
-    public abstract class CommonListResponse<TEntity, TFilter, TSortField> : CommonListQuery<TFilter, TSortField>
+    public abstract class CommonListResponse<TEntity, TFilter> : CommonListQuery<TFilter>
         where TEntity : class
         where TFilter : class, new()
-        where TSortField : Enum
     {
         public IEnumerable<TEntity> Entities { get; set; }
 

@@ -4,14 +4,12 @@
     /// Query common for get list entities.
     /// </summary>
     /// <typeparam name="TFilter">Type filter.</typeparam>
-    /// <typeparam name="TSortField">Enum contains fields for sort.</typeparam>
-    public abstract class CommonListQuery<TFilter, TSortField>
+    public abstract class CommonListQuery<TFilter>
         where TFilter : class, new()
-        where TSortField : Enum
     {
         public TFilter Filter { get; set; } = new();
 
-        public TSortField SortField { get; set; }
+        public string SortField { get; set; }
 
         public bool SortAsc { get; set; } = true;
 

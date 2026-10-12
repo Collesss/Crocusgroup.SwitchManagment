@@ -3,7 +3,6 @@ using Application.Common.Query.List;
 using Application.CurrentUserService.Security;
 using Application.DbContext;
 using Application.DbContext.Models;
-using Application.Switches.Queries.GetSwitchesList.Common;
 using Application.Switches.Queries.GetSwitchesList.Filter;
 using Application.Switches.Queries.GetSwitchesList.Response;
 using MapsterMapper;
@@ -12,7 +11,7 @@ namespace Application.Switches.Queries.GetSwitchesList.Query
 {
     [RequirePermission(Permissions.Switch.List)]
     public class GetSwitchesListQueryHandler(ISwitchManagmentDbContext dbContext, IMapper mapper, IFilterApplier<SwitchFilter, SwitchEntity> filterApplier) : 
-        CommonListQueryHandler<GetSwitchesListQuery, SwitchesListResponse, SwitchLookupDto, SwitchSortField, SwitchFilter, SwitchEntity>(dbContext, mapper, filterApplier)
+        CommonListQueryHandler<GetSwitchesListQuery, SwitchesListResponse, SwitchLookupDto, SwitchFilter, SwitchEntity>(dbContext, mapper, filterApplier)
     {
 
         /*
