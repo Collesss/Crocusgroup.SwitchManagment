@@ -2,7 +2,7 @@
 
 namespace WebAPI.Models.Dto.Common.Response
 {
-    public class GetListEntityResponse<TFilter, TEntity> : GetListEntityRequest<TFilter>
+    public class GetListEntityResponseDto<TFilter, TEntity> : GetListEntityRequestDto<TFilter>
         where TFilter : class, new()
     {
         public IEnumerable<TEntity> Entities { get; set; }

@@ -2,7 +2,7 @@
 
 namespace WebAPI.Models.Dto.Common.Request
 {
-    public class GetListEntityRequest<TFilter>
+    public class GetListEntityRequestDto<TFilter>
         where TFilter : class, new()
     {
         public TFilter Filter { get; set; } = new();

@@ -16,7 +16,7 @@ namespace WebAPI.ValidationAttributes
 
         public override bool IsValid(object value)
         {
-            if (value is not GetListEntityRequest<TFilter> getListRequest)
+            if (value is not GetListEntityRequestDto<TFilter> getListRequest)
                 throw new InvalidOperationException("This validation atrribute can apply only to GetListEntityRequest<>.");
 
             HashSet<string> props = new(typeof(TSortFieldEntity).GetProperties(BindingFlags.Public | BindingFlags.GetProperty).Select(prop => prop.Name));
